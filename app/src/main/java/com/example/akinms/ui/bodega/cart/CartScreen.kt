@@ -1,0 +1,91 @@
+package com.example.akinms.ui.bodega.cart
+
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.example.akinms.Minimarket
+import com.example.akinms.components.*
+import com.example.akinms.domain.model.CartItem
+import com.example.akinms.domain.model.Categoria
+import com.example.akinms.ui.bodega.cart.components.CartList
+
+@Composable
+fun CartScreen(
+    navController: NavHostController,
+    viewModel: CartViewModel = hiltViewModel(),
+    idBodega: Int,
+){
+    val cartItems by viewModel.items.collectAsState(initial = emptyList())
+        /*.collectAsState(
+        initial = emptyList()
+    )*/
+    var cartBodega = mutableListOf<CartItem>()
+    for(item in cartItems){
+        if(item.idBodega == idBodega)
+            cartBodega.add(item)
+    }
+    println("TAMAÑO DEL CARRITO:        "+cartItems.size)
+    val minimarket: Minimarket = Minimarket()
+    Scaffold(
+        topBar = {
+            //NavBarTop(minimarket,navController)
+        },
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 65.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            content = {
+                item{
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 5.dp),
+                        text = "Carrito de Compras",
+                        textAlign = TextAlign.Center,
+                        color = Color(0xFF03AC00),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                if(cartBodega.size>0){
+                    var total = 0.0
+                    cartBodega.forEach {
+                        total += it.precio*it.cantidad
+                        item {
+                            //CartProductItem(cantidad)
+                            println(cartItems.size)
+                            //CartList(cartList = cartItems)
+                            CartProductItem(item = it, viewModel = viewModel,navController=navController)
+                        }
+                    }
+
+                    item{
+                        CartTotalResume(total = total)
+                    }
+                }
+                else{
+                    item {
+                        Text(
+                            text = "Carrito Vacio"
+                        )
+                    }
+                }
+
+            }
+        )
+    }
+}

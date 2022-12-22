@@ -1,0 +1,141 @@
+package com.example.akinms.ui.bodega
+import com.example.akinms.util.navigationGraph.BodegaScreen.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Button
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.*
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.akinms.util.navigationGraph.BodegaScreen
+import com.example.akinms.components.*
+import com.example.akinms.domain.model.CartItem
+import com.example.akinms.domain.model.Categoria
+import com.example.akinms.ui.Maps.MapsViewModel
+import com.example.akinms.ui.bodega.cart.CartScreen
+import com.example.akinms.ui.bodega.cart.CartViewModel
+import com.example.akinms.ui.bodega.categories.CategoriesScreen
+import com.example.akinms.ui.bodega.products.ProductsScreen
+import com.example.akinms.util.navigationGraph.Graph
+import kotlinx.coroutines.flow.collectLatest
+
+@Composable
+fun BodegaScreen(
+    coreNavController: NavHostController,
+    navController: NavHostController = rememberNavController(),
+    bodegaViewModel: BodegaViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel = hiltViewModel(),
+    id: Long,
+) {
+    val items by cartViewModel.items.collectAsState(initial = emptyList())
+
+    var cartBodega = mutableListOf<CartItem>()
+    for(item in items){
+        if(item.idBodega == id.toInt())
+            cartBodega.add(item)
+    }
+    val state = bodegaViewModel.state
+    val eventFlow = bodegaViewModel.eventFlow
+    val scaffoldState = rememberScaffoldState()
+    LaunchedEffect(key1 = true){
+        eventFlow.collectLatest { event ->
+            when(event) {
+                is MapsViewModel.UIEvent.ShowSnackBar -> {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = event.message
+                    )
+                }
+            }
+        }
+    }
+    val bodega = state.bodega
+    val categorias = state.categorias
+    println("CANTIDAD DE CATEGORIAS:       "+categorias.size)
+    val someCategorias = mutableListOf<Categoria>()
+    for(cat in categorias){
+        if(someCategorias.size<6){
+            someCategorias.add(cat)
+        }
+    }
+    if(bodega!=null){
+        var cantidadCarrito = remember{ mutableStateOf(0) }
+        cantidadCarrito.value = cartBodega.size
+        Scaffold(
+            topBar = {
+                NavBarTop(bodega = bodega, navController = navController, coreController = coreNavController, cantidad = cantidadCarrito)
+            },
+        ) {
+            NavHost(
+                navController = navController,
+                startDestination = Bodega.route,
+                route = Graph.BODEGA+"/{id}"
+            ){
+                cantidadCarrito.value = cartBodega.size
+                composable(route = Bodega.route){
+                    LazyColumn(
+                        content = {
+                            item {
+                                SearchBar(
+                                    navController = navController,
+                                    name = bodega.nombre,
+                                    idBodega = bodega.id
+                                )
+                            }
+                            item {
+                                SomeCategories(navController = navController, category = someCategorias, idBodega = bodega.id)
+                            }
+                            item {
+                                Button(onClick = { navController.navigate(Products.route+"/"+bodega.id) }) { //cambiar el 2 por el id de la bodega
+                                    Text(text = "Ver productos")
+                                }
+                            }
+                            item {
+                                Other(navController)
+                            }
+                        }
+                    )
+                }
+                composable(route = BodegaScreen.Categories.route){
+                    //AllCategoriesView(navController = navController)
+                    CategoriesScreen(navController = navController, bodegaNombre = bodega.nombre, listaCategorias = categorias, idBodega = bodega.id)
+                }
+                composable(
+                    route = BodegaScreen.Products.route+"/{id}",
+                    arguments = listOf(navArgument("id"){type= NavType.LongType})
+                ) {
+                    ProductsScreen(navController = navController,bodegaNombre = bodega.nombre, idBodega = bodega.id, categorias = categorias)
+                }
+                composable(route = BodegaScreen.Cart.route+"/{id}",
+                    arguments = listOf(navArgument("id"){type= NavType.LongType})) {
+                    CartScreen(navController = navController, idBodega = bodega.id)
+                }
+                composable(
+                    route = BodegaScreen.Products.route+"/bodega/{id1}/categoria/{id2}",
+                    arguments = listOf(
+                        navArgument("id1"){type= NavType.LongType},
+                        navArgument("id2"){type= NavType.LongType}
+                    )
+                ) {
+                    ProductsScreen(navController = navController,bodegaNombre = bodega.nombre,idBodega=bodega.id, categorias = categorias, filterCategory = true)
+                }
+                composable(
+                    route = BodegaScreen.Products.route+"/buscar/{nombre}",
+                    arguments = listOf(
+                        navArgument("nombre"){type= NavType.StringType},
+                    )
+                ) { backStackEntry ->
+                    val nombre = backStackEntry.arguments?.getString("nombre")
+                    requireNotNull(nombre)
+                    ProductsScreen(navController = navController,bodegaNombre = bodega.nombre,idBodega=bodega.id, categorias = categorias, nombreSearch = true, nombre = nombre)
+                }
+            }
+
+        }
+    }
+}
