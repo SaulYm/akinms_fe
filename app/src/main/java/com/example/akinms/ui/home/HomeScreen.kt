@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -25,7 +26,7 @@ import com.example.akinms.util.navigationGraph.profileNavGraph
 
 @Composable
 fun HomeScreen(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     Scaffold(
         //bottomBar = { /*BottomBar(navController = navController)*/ }

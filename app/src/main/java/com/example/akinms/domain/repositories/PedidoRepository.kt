@@ -1,0 +1,10 @@
+package com.example.akinms.domain.repositories
+
+import com.example.akinms.data.source.remote.dto.pedido.Pedido
+import kotlinx.coroutines.flow.Flow
+import com.example.akinms.data.Result
+import com.example.akinms.data.source.remote.dto.pedido.PedidoX
+
+interface PedidoRepository {
+    fun getPedidosCliente(id: Long) : Flow<Result<List<PedidoX>>>
+}

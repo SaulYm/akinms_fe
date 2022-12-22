@@ -3,6 +3,8 @@ package com.example.akinms.data.source.remote
 import com.example.akinms.data.source.remote.dto.bodega.BodegaDto
 import com.example.akinms.data.source.remote.dto.bodega.BodegasDto
 import com.example.akinms.data.source.remote.dto.categoria.CategoriasDto
+import com.example.akinms.data.source.remote.dto.pedido.PedidoDto
+import com.example.akinms.data.source.remote.dto.pedido.PedidoDto2
 import com.example.akinms.data.source.remote.dto.producto.ProductDto
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -39,4 +41,9 @@ interface ApiRest {
         @Path("id") id: Long,
         @Query("nombre") nombre: String
     ): ProductDto
+
+    @GET("pedidos/consultar/cliente/{id}")
+    suspend fun getPedidoByClient(
+        @Path("id") id: Long
+    ): PedidoDto2
 }
