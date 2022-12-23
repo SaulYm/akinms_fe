@@ -21,6 +21,7 @@ import com.example.akinms.ui.Maps.MapsViewModel
 import com.example.akinms.ui.bodega.cart.CartScreen
 import com.example.akinms.ui.bodega.cart.CartViewModel
 import com.example.akinms.ui.bodega.categories.CategoriesScreen
+import com.example.akinms.ui.bodega.pedido.CheckOutScreen
 import com.example.akinms.ui.bodega.products.ProductsScreen
 import com.example.akinms.util.navigationGraph.Graph
 import kotlinx.coroutines.flow.collectLatest
@@ -64,11 +65,11 @@ fun BodegaScreen(
         }
     }
     if(bodega!=null){
-        var cantidadCarrito = remember{ mutableStateOf(0) }
-        cantidadCarrito.value = cartBodega.size
+        //var cantidadCarrito = remember{ mutableStateOf(0) }
+        //cantidadCarrito.value = cartBodega.size
         Scaffold(
             topBar = {
-                NavBarTop(bodega = bodega, navController = navController, coreController = coreNavController, cantidad = cantidadCarrito)
+                NavBarTop(bodega = bodega, navController = navController, coreController = coreNavController)
             },
         ) {
             NavHost(
@@ -76,7 +77,7 @@ fun BodegaScreen(
                 startDestination = Bodega.route,
                 route = Graph.BODEGA+"/{id}"
             ){
-                cantidadCarrito.value = cartBodega.size
+                //cantidadCarrito.value = cartBodega.size
                 composable(route = Bodega.route){
                     LazyColumn(
                         content = {
@@ -133,6 +134,11 @@ fun BodegaScreen(
                     val nombre = backStackEntry.arguments?.getString("nombre")
                     requireNotNull(nombre)
                     ProductsScreen(navController = navController,bodegaNombre = bodega.nombre,idBodega=bodega.id, categorias = categorias, nombreSearch = true, nombre = nombre)
+                }
+                composable(
+                    route = BodegaScreen.CheckOut.route
+                ){
+                    CheckOutScreen(navController=navController, idBodega = bodega.id)
                 }
             }
 

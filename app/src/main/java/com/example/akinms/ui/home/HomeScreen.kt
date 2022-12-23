@@ -34,10 +34,10 @@ fun HomeScreen(
         Column() {
             Text(text = "Parte superior")
             Button(onClick = { navController.navigate(CoreScreen.Maps.route) }) {
-                Text(text = "Buscar bodega")
+                Text(text = "Mostrar Mapa")
             }
-            Button(onClick = { navController.navigate(Graph.BODEGA)}) {
-                Text(text = "Mostrar bodega")
+            Button(onClick = { navController.navigate(CoreScreen.Bodegas.route)}) {
+                Text(text = "Mostrar Todas las bodegas")
             }
         }
     }

@@ -45,4 +45,5 @@ sealed class BodegaScreen(val route: String) {
     object Categories: BodegaScreen(route = "CATEGORIES")
     object Products : BodegaScreen(route = "PRODUCTS")
     object Cart: BodegaScreen(route = "CART")
+    object CheckOut: BodegaScreen(route = "CHECKOUT")
 }

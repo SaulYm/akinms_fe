@@ -8,9 +8,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +32,7 @@ import com.example.akinms.R
 import com.example.akinms.domain.model.CartItem
 import com.example.akinms.ui.Screen
 import com.example.akinms.ui.bodega.cart.CartViewModel
+import com.example.akinms.util.navigationGraph.BodegaScreen
 
 @Composable
 fun CartProductItem(
@@ -39,6 +40,7 @@ fun CartProductItem(
     item: CartItem,
     viewModel: CartViewModel,
     navController: NavHostController,
+    idBodega: Int,
 ){
     //var cantidad = remember { mutableStateOf(1) }
     val context: Context = LocalContext.current
@@ -74,6 +76,7 @@ fun CartProductItem(
                 verticalArrangement = Arrangement.SpaceAround
             ) {
                 Text(
+                    modifier = Modifier.width(100.dp),
                     text = item.nombre,
                     fontSize = 16.sp
                 )
@@ -104,7 +107,11 @@ fun CartProductItem(
                 Row(
                     modifier = Modifier
                         .padding(top = 8.dp)
-                        .border(width = 1.dp, color = Color(0xFFD9D9D9), shape = RoundedCornerShape(10.dp)),
+                        .border(
+                            width = 1.dp,
+                            color = Color(0xFFD9D9D9),
+                            shape = RoundedCornerShape(10.dp)
+                        ),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -154,14 +161,17 @@ fun CartProductItem(
                         Text(text = "+", fontSize = 12.sp)
                     }*/
                     Box(
-                        modifier = Modifier.width(30.dp).height(30.dp).background(Color(0xFFD9D9D9))
+                        modifier = Modifier
+                            .width(30.dp)
+                            .height(30.dp)
+                            .background(Color(0xFFD9D9D9))
                             .clickable {
                                 if (cantidad.value > 1) {
                                     cantidad.value--
                                     item.cantidad = cantidad.value
                                     viewModel.updateCartItem(item)
                                     navController.popBackStack()
-                                    navController.navigate(Screen.Cart.route)
+                                    navController.navigate(BodegaScreen.Cart.route+"/"+idBodega)
                                 } else {
                                     Toast
                                         .makeText(
@@ -176,25 +186,39 @@ fun CartProductItem(
                         Text(modifier = Modifier.align(Alignment.Center), text = "-")
                     }
                     Box(
-                        modifier = Modifier.width(38.dp).height(30.dp)
+                        modifier = Modifier
+                            .width(38.dp)
+                            .height(30.dp)
                     ){
                         Text(modifier = Modifier.align(Alignment.Center), text = cantidad.value.toString())
                     }
                     Box(
-                        modifier = Modifier.width(30.dp).height(30.dp).background(Color(0xFFD9D9D9))
+                        modifier = Modifier
+                            .width(30.dp)
+                            .height(30.dp)
+                            .background(Color(0xFFD9D9D9))
                             .clickable {
                                 cantidad.value++
                                 item.cantidad = cantidad.value
                                 viewModel.updateCartItem(item)
                                 navController.popBackStack()
-                                navController.navigate(Screen.Cart.route)
+                                navController.navigate(BodegaScreen.Cart.route+"/"+idBodega)
                             }
                     ) {
                         Text(modifier = Modifier.align(Alignment.Center), text = "+")
                     }
                 }
             }
-            Button(
+            IconButton(
+                modifier = Modifier
+                    .background(Color(0xFFE5383B))
+                    .border(width = 1.dp,color=Color(0xFFE5383B), shape = RoundedCornerShape(5.dp))
+                    .padding(0.dp),
+                onClick = { viewModel.deleteCartItem(item) }
+            ) {
+                Icon(Icons.Rounded.Delete, contentDescription = "", tint = Color.White)
+            }
+            /*Button(
                 onClick = {
                     viewModel.deleteCartItem(item)
                 },
@@ -206,7 +230,7 @@ fun CartProductItem(
                 ),
             ) {
                 Text(text = "Eliminar", fontSize = 12.sp)
-            }
+            }*/
         }
     }
 }

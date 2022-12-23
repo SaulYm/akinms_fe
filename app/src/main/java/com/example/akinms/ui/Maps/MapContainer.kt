@@ -4,9 +4,11 @@ package com.example.akinms.ui.Maps
 
 import android.Manifest
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.akinms.domain.model.Bodega
 import com.example.akinms.util.navigationGraph.BodegaScreen
@@ -36,7 +38,7 @@ fun MapContainer(
         )
     )
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(LatLng(-12.056046487102194, -77.08448330743019), 18f)
+        position = CameraPosition.fromLatLngZoom(LatLng(-12.056085361847803, -77.08451037122089), 17f)
     }
 
     LaunchedEffect(Unit) {
@@ -49,6 +51,7 @@ fun MapContainer(
     }*/
     println("HERE WE GOOOOO :" + bodegas.size)
     GoogleMap(
+        modifier = Modifier.padding(8.dp),
         cameraPositionState = cameraPositionState,
         properties = MapProperties(isMyLocationEnabled = true),
         //uiSettings = MapUiSettings(compassEnabled = true)

@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.example.akinms.ui.Maps.MapsScreen
+import com.example.akinms.ui.Maps.bodegas.TodasBodegasScreen
 import com.example.akinms.ui.bodega.BodegaScreen
 import com.example.akinms.ui.home.HomeScreen
 import com.example.akinms.ui.home.HomeViewModel
@@ -40,10 +41,14 @@ fun NavGraphBuilder.coreNavGraph(
             requireNotNull(id)
             BodegaScreen(coreNavController = navController, id = id)
         }
+        composable(route = CoreScreen.Bodegas.route){
+            TodasBodegasScreen(navController=navController)
+        }
         //bodegaNavGraph(navController=navController)
     }
 }
 sealed class CoreScreen(val route: String) {
     object Ofertas: CoreScreen(route = "OFERTAS")
     object Maps : CoreScreen(route = "MAPS")
+    object Bodegas: CoreScreen(route = "BODEGAS")
 }

@@ -1,5 +1,6 @@
 package com.example.akinms.ui.settings
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -7,11 +8,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.akinms.R
+import com.example.akinms.ui.theme.PrimaryColor
 
 @Composable
 fun SettingsScreen(
@@ -21,20 +24,19 @@ fun SettingsScreen(
 ){
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
+            .fillMaxSize(1f),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(1f).background(PrimaryColor),
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                onClick = { navController.popBackStack()  }
+                onClick = { navController.popBackStack() }
             ) {
-                Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "")
+                Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "", tint = Color.White)
             }
-            Text(text = "Settings Screen")
+            Text(text = "Configuración", color = Color.White)
         }
     }
 }

@@ -1,11 +1,13 @@
 package com.example.akinms.ui.Maps
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.akinms.R
 import com.example.akinms.ui.bodega.products.ProductsViewModel
+import com.example.akinms.ui.theme.PrimaryColor
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -36,20 +39,19 @@ fun MapsScreen(
     }
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
+            .fillMaxSize(1f),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(1f).background(PrimaryColor),
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
                 onClick = { navController.popBackStack() }
             ) {
-                Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "")
+                Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "", tint = Color.White)
             }
-            Text(text = "Encuentra tu bodega cercana")
+            Text(text = "Encuentra tu bodega cercana", color = Color.White)
         }
         println("CANTIDAD DE BODEGAS: "+state.bodegas.size)
         MapContainer(

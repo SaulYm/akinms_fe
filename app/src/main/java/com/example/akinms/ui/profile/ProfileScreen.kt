@@ -1,11 +1,13 @@
 package com.example.akinms.ui.profile
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
@@ -14,6 +16,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.akinms.R
+import com.example.akinms.ui.theme.PrimaryColor
 import com.example.akinms.util.BottomBarScreen
 import com.example.akinms.util.navigationGraph.ProfileScreen
 
@@ -25,19 +28,18 @@ fun ProfileScreen(
 ){
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
+            .fillMaxSize(1f),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(1f).background(PrimaryColor),
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
                 onClick = { navController.popBackStack() }
             ) {
-                Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "")
+                Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "", tint = Color.White)
             }
-            Text(text = "Profile Screen")
+            Text(text = "Vista de Usuario", color = Color.White)
         }
         Column() {
             Text(text = "Dato de usuario")

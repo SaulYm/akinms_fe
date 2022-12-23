@@ -35,9 +35,18 @@ fun NavBarTop(
     bodega:Bodega,
     navController: NavHostController,
     coreController: NavHostController,
-    //cartViewModel: CartViewModel = hiltViewModel(),
-    cantidad: MutableState<Int>
+    cartViewModel: CartViewModel = hiltViewModel(),
+    //cantidad: MutableState<Int>
 ){
+    val cartItems by cartViewModel.items.collectAsState(initial = emptyList())
+    var cartBodega = mutableListOf<CartItem>()
+    for(item in cartItems){
+        if(item.idBodega == bodega.id)
+            cartBodega.add(item)
+    }
+    var cantidad by remember { mutableStateOf("") }
+    cantidad = cartBodega.size.toString()
+    println("CURRENT DESTINATION NAVTOPBAR:  "+navController.currentDestination)
     /*var cantidad2 = 0
     var cantidad = remember { mutableStateOf(cantidad2) }
     //var minimarket: Minimarket = Minimarket()
@@ -140,7 +149,7 @@ fun NavBarTop(
             ) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    text = cantidad.value.toString(),
+                    text = cantidad,
                     color = Color.White,
                     fontSize = 8.sp,
                 )

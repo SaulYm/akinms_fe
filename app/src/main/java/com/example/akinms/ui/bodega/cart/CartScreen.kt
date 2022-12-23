@@ -1,8 +1,8 @@
 package com.example.akinms.ui.bodega.cart
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -20,6 +20,7 @@ import com.example.akinms.components.*
 import com.example.akinms.domain.model.CartItem
 import com.example.akinms.domain.model.Categoria
 import com.example.akinms.ui.bodega.cart.components.CartList
+import com.example.akinms.util.navigationGraph.BodegaScreen
 
 @Composable
 fun CartScreen(
@@ -31,6 +32,7 @@ fun CartScreen(
         /*.collectAsState(
         initial = emptyList()
     )*/
+
     var cartBodega = mutableListOf<CartItem>()
     for(item in cartItems){
         if(item.idBodega == idBodega)
@@ -45,8 +47,8 @@ fun CartScreen(
     ) {
         LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 65.dp),
+                .fillMaxWidth(1f)
+                .padding(bottom = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             content = {
                 item{
@@ -69,12 +71,23 @@ fun CartScreen(
                             //CartProductItem(cantidad)
                             println(cartItems.size)
                             //CartList(cartList = cartItems)
-                            CartProductItem(item = it, viewModel = viewModel,navController=navController)
+                            CartProductItem(item = it, viewModel = viewModel,navController=navController,idBodega)
                         }
                     }
 
                     item{
                         CartTotalResume(total = total)
+                    }
+                    item{
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                            Button(
+                                modifier = Modifier.width(200.dp),
+                                onClick = { navController.navigate(BodegaScreen.CheckOut.route) }
+                            ) {
+                                Text(text = "Continuar CheckOut")
+                            }
+                        }
+
                     }
                 }
                 else{
