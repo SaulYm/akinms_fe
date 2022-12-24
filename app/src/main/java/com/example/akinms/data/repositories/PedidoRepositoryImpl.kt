@@ -8,6 +8,7 @@ import com.example.akinms.data.source.remote.dto.bodega.toBodega
 import com.example.akinms.data.source.remote.dto.pedido.Pedido
 import com.example.akinms.data.source.remote.dto.pedido.PedidoX
 import com.example.akinms.data.source.remote.dto.pedido.toPedidos
+import com.example.akinms.domain.model.Bodega
 import com.example.akinms.domain.repositories.PedidoRepository
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -35,6 +36,15 @@ class PedidoRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getDetallePedidoCliente(id_cliente: Long, id_pedido: Long): Result<PedidoX>{
+        val response = try{
+            api.getDetallePedidoCliente(id_cliente,id_pedido)
+        } catch (e:java.lang.Exception){
+            return Result.Error("An unknown error occurred")
+        }
+        return Result.Success(response.toPedidos())
+    }
+
     override suspend fun setPedido(pedido: Pedido): Result<PedidoX> {
         val response = try{
             api.setPedido(pedido)
@@ -43,5 +53,4 @@ class PedidoRepositoryImpl @Inject constructor(
         }
         return Result.Success(response.toPedidos())
     }
-
 }

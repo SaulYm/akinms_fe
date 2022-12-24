@@ -52,4 +52,10 @@ interface ApiRest {
     suspend fun setPedido(
         @Body pedido: Pedido
     ): PedidoDto3
+
+    @GET("pedidos/consultar/cliente/{id_cliente}/pedido/{id_pedido}")
+    suspend fun getDetallePedidoCliente(
+        @Path("id_cliente") id_cliente: Long,
+        @Path("id_pedido") id_pedido: Long
+    ): PedidoDto4
 }

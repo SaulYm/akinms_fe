@@ -130,7 +130,7 @@ fun HistorialScreen(
                                     }
 
                                     IconButton(
-                                        onClick = { navController.navigate(HistorialScreen.Details.route) }
+                                        onClick = { navController.navigate(HistorialScreen.Details.route+"/cliente/"+1+"/pedido/"+pedido.idpedido) }
                                     ) {
                                         Icon(
                                             Icons.Rounded.KeyboardArrowRight,
@@ -138,11 +138,7 @@ fun HistorialScreen(
                                             tint = Color.Black
                                         )
                                     }
-                                    /*Icon(
-                                        Icons.Rounded.KeyboardArrowRight,
-                                        contentDescription = "arrow right",
-                                        tint = Color.Black
-                                    )*/
+
                                 }
                                 Row() {
                                     Text(
