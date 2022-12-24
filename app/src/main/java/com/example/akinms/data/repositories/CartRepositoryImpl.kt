@@ -19,5 +19,5 @@ class CartRepositoryImpl(
 
     override fun deleteItemFromRoom(cartItem: CartItem) = cartDao.deleteItem(cartItem)
 
-    override fun deleteAllItemsFromRoom() = cartDao.deleteAllItems()
+    override fun deleteAllItemsFromRoom(id:Int) = cartDao.deleteAllItems(id)
 }

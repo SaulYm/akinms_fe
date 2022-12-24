@@ -11,5 +11,5 @@ interface CartItemRepository {
     fun addItemToRoom(cartItem: CartItem)
     fun updateItemInRoom(cartItem: CartItem)
     fun deleteItemFromRoom(cartItem: CartItem)
-    fun deleteAllItemsFromRoom()
+    fun deleteAllItemsFromRoom(id:Int)
 }

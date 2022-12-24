@@ -24,6 +24,6 @@ interface CartDao {
     @Delete
     fun deleteItem(item: CartItem)
 
-    @Query("DELETE FROM $CART_TABLE")
-    fun deleteAllItems()
+    @Query("DELETE FROM $CART_TABLE WHERE idBodega = :id")
+    fun deleteAllItems(id: Int)
 }

@@ -48,6 +48,7 @@ import com.example.akinms.ui.bodega.cart.CartViewModel
 import com.example.akinms.ui.theme.PrimaryColor
 import com.example.akinms.util.githubCreditCardMasker.CardNumberMask
 import com.example.akinms.util.githubCreditCardMasker.ExpirationDateMask
+import com.example.akinms.util.navigationGraph.Graph
 import okhttp3.internal.notify
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -58,7 +59,8 @@ fun CheckOutScreen(
     navController: NavHostController,
     viewModel: CartViewModel = hiltViewModel(),
     idBodega: Int,
-    pedidoViewModel: PedidoViewModel = hiltViewModel()
+    pedidoViewModel: PedidoViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel = hiltViewModel()
     //carrito: List<CartItem>
 ){
     var fechaActual = LocalDateTime.now().toString().substring(0,11)
@@ -611,6 +613,9 @@ fun CheckOutScreen(
                             pedidoViewModel.setPedido(pedido)
                             if(pedidoViewModel.state.pedidos?.idpedido!=0){
                                 println("SE HA REGISTRADO EL PEDIGO GAAAAAAAAAAAAAAAAAAAAAA")
+                                cartViewModel.deleteCartList(idBodega)
+                                navController.navigate(Graph.BODEGA+"/"+idBodega)
+
                             }else{
                                 println("TODO SE FUE AL DEMONIO GAAAAAAAAAAAAAAAAAAAAAAAAAAA")
                             }

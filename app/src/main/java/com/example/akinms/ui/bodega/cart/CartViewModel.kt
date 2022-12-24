@@ -51,4 +51,7 @@ class CartViewModel @Inject constructor(
     fun deleteCartItem(cartItem: CartItem) = viewModelScope.launch(Dispatchers.IO) {
         repo.deleteItemFromRoom(cartItem)
     }
+    fun deleteCartList(id: Int) = viewModelScope.launch(Dispatchers.IO ) {
+        repo.deleteAllItemsFromRoom(id)
+    }
 }
