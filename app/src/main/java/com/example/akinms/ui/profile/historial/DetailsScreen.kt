@@ -9,13 +9,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.akinms.R
+import com.example.akinms.ui.profile.DetalleState
+import com.example.akinms.ui.profile.DetalleViewModel
+import com.example.akinms.ui.profile.ProfileState
 
 @Composable
 fun DetailsScreen(
     navController: NavHostController,
+    detalleViewModel: DetalleViewModel = hiltViewModel()
 ){
+    var state: DetalleState = detalleViewModel.state
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,5 +40,6 @@ fun DetailsScreen(
             Text(text = "DETALLES DEL PEDIDO")
         }
         Text(text = "AQUI IRÍAN LOS DETALLES DEL PEDIDO SI MIS COMPAS LO HUBIERAN HECHO")
+        println("RESULTADO DEL PEDIO:        "+state.pedidos?.fecha)
     }
 }

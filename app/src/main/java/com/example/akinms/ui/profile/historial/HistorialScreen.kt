@@ -130,7 +130,7 @@ fun HistorialScreen(
                                     }
 
                                     IconButton(
-                                        onClick = { navController.navigate(HistorialScreen.Details.route+"/cliente/"+1+"/pedido/"+pedido.idpedido) }
+                                        onClick = { navController.navigate(HistorialScreen.Details.route+"/cliente/"+1+"/pedido/"+pedido.idpedido.toLong()) }
                                     ) {
                                         Icon(
                                             Icons.Rounded.KeyboardArrowRight,
