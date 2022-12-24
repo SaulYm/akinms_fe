@@ -3,10 +3,11 @@ package com.example.akinms.data.source.remote
 import com.example.akinms.data.source.remote.dto.bodega.BodegaDto
 import com.example.akinms.data.source.remote.dto.bodega.BodegasDto
 import com.example.akinms.data.source.remote.dto.categoria.CategoriasDto
-import com.example.akinms.data.source.remote.dto.pedido.PedidoDto
-import com.example.akinms.data.source.remote.dto.pedido.PedidoDto2
+import com.example.akinms.data.source.remote.dto.pedido.*
 import com.example.akinms.data.source.remote.dto.producto.ProductDto
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -17,10 +18,10 @@ interface ApiRest {
         @Path("id") id: Long
     ): ProductDto
 
-    @GET("bodegas/")
+    @GET("bodegas/listarbodegas/")
     suspend fun getBodegas(): BodegasDto
 
-    @GET("bodegas/{id}")
+    @GET("bodegas/detalles/{id}")
     suspend fun getBodega(
         @Path("id") id:Long
     ): BodegaDto
@@ -46,4 +47,9 @@ interface ApiRest {
     suspend fun getPedidoByClient(
         @Path("id") id: Long
     ): PedidoDto2
+
+    @POST("pedidos/registrar")
+    suspend fun setPedido(
+        @Body pedido: Pedido
+    ): PedidoDto3
 }

@@ -1,11 +1,13 @@
 package com.example.akinms.data.source.remote.dto.pedido
 
 data class Pedido(
-    val detallesPedido: List<DetallesPedido>,
-    val estado: String,
-    val fecha: String,
-    val idpedido: Int,
-    val metodo_pago: String,
-    val monto_total: Double,
-    val tipo_entrega: String
+    var bodega: Bodega2,
+    var cliente: Cliente,
+    var detallesPedido: List<DetallesPedido>,
+    var estado: String,
+    var fecha: String,
+    //var idpedido: Int? = 0,
+    var metodo_pago: String,
+    var monto_total: Double,
+    var tipo_entrega: String
 )

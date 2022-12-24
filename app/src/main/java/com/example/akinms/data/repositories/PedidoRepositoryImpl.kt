@@ -4,6 +4,7 @@ import com.example.akinms.data.source.remote.ApiRest
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import com.example.akinms.data.Result
+import com.example.akinms.data.source.remote.dto.bodega.toBodega
 import com.example.akinms.data.source.remote.dto.pedido.Pedido
 import com.example.akinms.data.source.remote.dto.pedido.PedidoX
 import com.example.akinms.data.source.remote.dto.pedido.toPedidos
@@ -32,6 +33,15 @@ class PedidoRepositoryImpl @Inject constructor(
                 data = null
             ))
         }
+    }
+
+    override suspend fun setPedido(pedido: Pedido): Result<PedidoX> {
+        val response = try{
+            api.setPedido(pedido)
+        } catch (e:java.lang.Exception){
+            return Result.Error("An unknown error occurred")
+        }
+        return Result.Success(response.toPedidos())
     }
 
 }

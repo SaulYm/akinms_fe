@@ -1,6 +1,8 @@
 package com.example.akinms.ui.bodega.pedido
 
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -39,20 +41,27 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.akinms.data.source.remote.dto.pedido.*
+import com.example.akinms.data.source.remote.dto.pedido.Producto
 import com.example.akinms.domain.model.CartItem
 import com.example.akinms.ui.bodega.cart.CartViewModel
 import com.example.akinms.ui.theme.PrimaryColor
 import com.example.akinms.util.githubCreditCardMasker.CardNumberMask
 import com.example.akinms.util.githubCreditCardMasker.ExpirationDateMask
 import okhttp3.internal.notify
+import java.time.LocalDate
+import java.time.LocalDateTime
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CheckOutScreen(
     navController: NavHostController,
     viewModel: CartViewModel = hiltViewModel(),
     idBodega: Int,
+    pedidoViewModel: PedidoViewModel = hiltViewModel()
     //carrito: List<CartItem>
 ){
+    var fechaActual = LocalDateTime.now().toString().substring(0,11)
     val cartItems by viewModel.items.collectAsState(initial = emptyList())
     var cartBodega = mutableListOf<CartItem>()
     for(item in cartItems){
@@ -583,7 +592,40 @@ fun CheckOutScreen(
                 Row(modifier = Modifier.fillMaxWidth(1f), horizontalArrangement = Arrangement.Center) {
                     Button(
                         modifier = Modifier.width(250.dp),
-                        onClick = { /*TODO*/ }) {
+                        onClick = {
+                            var detalles: MutableList<DetallesPedido> = mutableListOf()
+                            for(detalle in cartBodega){
+                                detalles.add(DetallesPedido(detalle.cantidad,Producto(detalle.id)))
+                            }
+                            var pedido: Pedido = Pedido(
+                                Bodega2(idBodega),
+                                Cliente(1),
+                                detalles,
+                                "enviado",
+                                fechaActual,
+                                //0,
+                                formaPago,
+                                (monto+costoEntrega.toDouble()),
+                                formaEntrega
+                            )
+                            pedidoViewModel.setPedido(pedido)
+                            if(pedidoViewModel.state.pedidos?.idpedido!=0){
+                                println("SE HA REGISTRADO EL PEDIGO GAAAAAAAAAAAAAAAAAAAAAA")
+                            }else{
+                                println("TODO SE FUE AL DEMONIO GAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                            }
+                            /*(
+                                Bodega2(idBodega);
+                                Cliente(1);
+                                detalles;
+                                "enviado";
+                                fechaActual;
+                                formaPago;
+                                (monto+costoEntrega.toDouble()).toString()
+                                formaEntrega
+                            )*/
+
+                        }) {
                         Text(text = "Confirmar Pedido")
                     }
                 }
