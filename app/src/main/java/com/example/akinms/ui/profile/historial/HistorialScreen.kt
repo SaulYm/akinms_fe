@@ -27,6 +27,7 @@ import com.example.akinms.R
 import com.example.akinms.ui.profile.ProfileState
 import com.example.akinms.ui.profile.ProfileViewModel
 import com.example.akinms.ui.theme.PrimaryColor
+import com.example.akinms.util.navigationGraph.HistorialScreen
 import org.w3c.dom.Text
 
 @Composable
@@ -128,20 +129,20 @@ fun HistorialScreen(
                                         )
                                     }
 
-                                    /*IconButton(
-                                        //onClick = { navController.navigate(HistorialScreen.Details.route) }
+                                    IconButton(
+                                        onClick = { navController.navigate(HistorialScreen.Details.route) }
                                     ) {
                                         Icon(
                                             Icons.Rounded.KeyboardArrowRight,
                                             contentDescription = "arrow right",
                                             tint = Color.Black
                                         )
-                                    }*/
-                                    Icon(
+                                    }
+                                    /*Icon(
                                         Icons.Rounded.KeyboardArrowRight,
                                         contentDescription = "arrow right",
                                         tint = Color.Black
-                                    )
+                                    )*/
                                 }
                                 Row() {
                                     Text(
@@ -161,9 +162,9 @@ fun HistorialScreen(
                                     ),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                var i: Int = 0
+                                var i: Int = 1
                                 for(detalle in pedido.detallesPedido){
-                                    if (i <= 6){
+                                    if (i <= 5){
                                         Image(
                                             modifier = Modifier
                                                 .height(40.dp)

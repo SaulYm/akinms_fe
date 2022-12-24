@@ -1,4 +1,6 @@
 package com.example.akinms.ui.bodega
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.akinms.util.navigationGraph.BodegaScreen.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Button
@@ -26,6 +28,7 @@ import com.example.akinms.ui.bodega.products.ProductsScreen
 import com.example.akinms.util.navigationGraph.Graph
 import kotlinx.coroutines.flow.collectLatest
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BodegaScreen(
     coreNavController: NavHostController,

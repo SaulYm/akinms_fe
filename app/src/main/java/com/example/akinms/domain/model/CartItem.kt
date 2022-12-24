@@ -8,6 +8,7 @@ import com.example.akinms.util.CART_TABLE
 data class CartItem(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
+    val idproducto: Int,
     val nombre: String,
     val descripcion: String,
     val precio: Double,

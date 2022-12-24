@@ -597,7 +597,8 @@ fun CheckOutScreen(
                         onClick = {
                             var detalles: MutableList<DetallesPedido> = mutableListOf()
                             for(detalle in cartBodega){
-                                detalles.add(DetallesPedido(detalle.cantidad,Producto(detalle.id)))
+                                println("PRODUCTO ELEGIDO:        "+detalle.nombre+" con ID: "+detalle.idproducto)
+                                detalles.add(DetallesPedido(detalle.cantidad,Producto(detalle.idproducto)))
                             }
                             var pedido: Pedido = Pedido(
                                 Bodega2(idBodega),

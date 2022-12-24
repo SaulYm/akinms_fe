@@ -20,7 +20,7 @@ class CartViewModel @Inject constructor(
     private val repo: CartItemRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    var cart by mutableStateOf(CartItem(0,"","",0.0,0, "",0))
+    var cart by mutableStateOf(CartItem(0,0,"","",0.0,0, "",0))
         private set
 
     val items = repo.getCartListFromRoom()

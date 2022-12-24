@@ -142,6 +142,7 @@ fun BodyProductDialogContent(
                     cartViewModel.addCartItem(
                         CartItem(
                             id = 0,
+                            idproducto = producto.id,
                             nombre = producto.nombre,
                             descripcion = producto.descripcion,
                             precio = producto.precio,
