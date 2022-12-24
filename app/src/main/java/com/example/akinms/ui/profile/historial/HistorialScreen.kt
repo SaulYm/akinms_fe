@@ -1,15 +1,15 @@
 package com.example.akinms.ui.profile.historial
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +26,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.akinms.R
 import com.example.akinms.ui.profile.ProfileState
 import com.example.akinms.ui.profile.ProfileViewModel
+import com.example.akinms.ui.theme.PrimaryColor
+import org.w3c.dom.Text
 
 @Composable
 fun HistorialScreen(
@@ -68,7 +70,7 @@ fun HistorialScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ){
             Text(
-                "Enero",
+                "Compras",
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold
@@ -76,6 +78,7 @@ fun HistorialScreen(
             )
             HistText(text = state.pedidos.size.toString()+" Compras",13, FontWeight.Bold, Color.Gray)
         }
+        Divider(startIndent = 8.dp, thickness = 1.dp, color = Color.Black)
         LazyColumn(
             modifier = Modifier
                 .padding(top = 5.dp)
@@ -87,7 +90,8 @@ fun HistorialScreen(
                         modifier = Modifier
                             .padding(20.dp)
                             .clip(RoundedCornerShape(10))
-                            .border(BorderStroke(0.7.dp, Color.Gray), shape = RoundedCornerShape(10))
+                            .border(BorderStroke(0.7.dp, Color.Gray),
+                                shape = RoundedCornerShape(10))
                             .background(Color.White)
                             .padding(10.dp)
 
@@ -103,17 +107,41 @@ fun HistorialScreen(
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
                                     Text(
-                                        text = pedido.bodega.direccion+" "+pedido.bodega.nombre,
+                                        text = pedido.bodega.direccion+" - "+pedido.bodega.nombre,
                                         fontWeight = FontWeight.Bold
                                     )
-                                    Text(
-                                        text = pedido.estado,
-                                        fontSize = 13.sp,
-                                        color = Color.Yellow,
-                                        fontWeight = FontWeight.Bold,
-                                        textAlign = TextAlign.Center,
+                                    if (pedido.estado == "enviado") {
+                                        Text(
+                                            text = pedido.estado,
+                                            fontSize = 13.sp,
+                                            color = Color.Green,
+                                            fontWeight = FontWeight.Bold,
+                                            textAlign = TextAlign.Center
+                                        )
+                                    }else{
+                                        Text(
+                                            text = pedido.estado,
+                                            fontSize = 13.sp,
+                                            color = PrimaryColor,
+                                            fontWeight = FontWeight.Bold,
+                                            textAlign = TextAlign.Center
+                                        )
+                                    }
+
+                                    /*IconButton(
+                                        //onClick = { navController.navigate(HistorialScreen.Details.route) }
+                                    ) {
+                                        Icon(
+                                            Icons.Rounded.KeyboardArrowRight,
+                                            contentDescription = "arrow right",
+                                            tint = Color.Black
+                                        )
+                                    }*/
+                                    Icon(
+                                        Icons.Rounded.KeyboardArrowRight,
+                                        contentDescription = "arrow right",
+                                        tint = Color.Black
                                     )
-                                    Text(">")
                                 }
                                 Row() {
                                     Text(
@@ -133,63 +161,44 @@ fun HistorialScreen(
                                     ),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
+                                var i: Int = 0
                                 for(detalle in pedido.detallesPedido){
-                                    Image(
-                                        modifier = Modifier
-                                            .height(40.dp)
-                                            .weight(40f),
-                                        painter = rememberAsyncImagePainter(detalle.producto.img),
-                                        contentDescription = null,
-                                        //modifier = Modifier.size(100.dp)
-                                    )
+                                    if (i <= 6){
+                                        Image(
+                                            modifier = Modifier
+                                                .height(40.dp)
+                                                .weight(40f),
+                                            painter = rememberAsyncImagePainter(detalle.producto.img),
+                                            contentDescription = null,
+                                            //modifier = Modifier.size(100.dp)
+                                        )
+                                    }
+                                    else{
+                                        break
+                                    }
+                                    i++
                                 }
                                 /*Image(
                                     painterResource(R.drawable.bebidas),"cocacola",
                                     modifier = Modifier
                                         .height(40.dp)
                                         .weight(40f)
-                                )
-                                Image(
-                                    painterResource(R.drawable.bebidas),"cocacola",
-                                    modifier = Modifier
-                                        .height(40.dp)
-                                        .weight(40f)
-                                )
-                                Image(
-                                    painterResource(R.drawable.bebidas),"cocacola",
-                                    modifier = Modifier
-                                        .height(40.dp)
-                                        .weight(40f)
-                                )
-                                Image(
-                                    painterResource(R.drawable.bebidas),"cocacola",
-                                    modifier = Modifier
-                                        .height(40.dp)
-                                        .weight(40f)
-                                )
-                                Image(
-                                    painterResource(R.drawable.bebidas),"cocacola",
-                                    modifier = Modifier
-                                        .height(40.dp)
-                                        .weight(40f)
-                                )
-                                Image(
-                                    painterResource(R.drawable.bebidas),"cocacola",
-                                    modifier = Modifier
-                                        .height(40.dp)
-                                        .weight(40f)
-                                )
-                                Text(
-                                    "+5",
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(25.dp)
-                                        .align(Alignment.CenterVertically)
-                                        .clip(RoundedCornerShape(20))
-                                        .background(Color.Gray)
-                                    ,
-                                    textAlign = TextAlign.Center
                                 )*/
+                                if(pedido.detallesPedido.size > 6){
+                                    var cantProdExtra: Int = pedido.detallesPedido.size - 6
+                                    Text(
+                                        cantProdExtra.toString(),
+                                        modifier = Modifier
+                                            .height(20.dp)
+                                            .width(25.dp)
+                                            .align(Alignment.CenterVertically)
+                                            .clip(RoundedCornerShape(20))
+                                            .background(Color.Gray)
+                                        ,
+                                        textAlign = TextAlign.Center
+                                    )
+                                }
+
                             }
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
@@ -237,5 +246,10 @@ fun HistText (text: String, size: Int = 13, fontWeight: FontWeight = FontWeight.
         fontWeight = fontWeight,
         textAlign = TextAlign.Center
     )
+}
+
+@Composable
+fun detallePedido(){
+    // Capturar los detalles del pedido
 }
 
