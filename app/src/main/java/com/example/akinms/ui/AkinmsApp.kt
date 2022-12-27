@@ -2,6 +2,7 @@ package com.example.akinms.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.akinms.ui.Maps.MapsScreen
@@ -11,6 +12,8 @@ import com.example.akinms.ui.theme.AkinmsTheme
 import com.example.akinms.util.*
 import com.example.akinms.util.navigationGraph.RootNavigationGraph
 
+
+@Preview
 @Composable
 fun AkinmsApp(){
     AkinmsTheme {
@@ -24,6 +27,7 @@ fun AkinmsApp(){
             navigateToProducts = navigationActions.navigateToProducts,
             navigateToCart = navigationActions.navigateToCart,
         )*/
+        //LoginView()
         MainScreen(navController = navController)
         //MapsScreen(navController = navController)
         //RootNavigationGraph(navController = navController)
