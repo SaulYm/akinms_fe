@@ -6,12 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.akinms.domain.use_case.GetPedidosClienteUseCase
 import com.example.akinms.data.Result
 import com.example.akinms.domain.use_case.GetDetallePedidoClienteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,6 +27,7 @@ class DetalleViewModel @Inject constructor(
         savedStateHandle.get<Long>("id_cliente")?.let { clienteId ->
             savedStateHandle.get<Long>("id_pedido")?.let { pedidoId ->
                 viewModelScope.launch {
+                    println("ID DEL PEDIDO: "+pedidoId)
                     getDetallePedidoClienteUseCase(clienteId, pedidoId).also { result ->
                         when (result) {
                             is Result.Success -> {

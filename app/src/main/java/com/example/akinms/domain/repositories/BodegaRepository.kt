@@ -10,6 +10,8 @@ interface BodegaRepository {
 
     fun getBodegas() : Flow<Result<List<Bodega>>>
 
+    fun getBodegasPremium() : Flow<Result<List<Bodega>>>
+
     suspend fun getBodega(id:Long): Result<Bodega>
 
 }

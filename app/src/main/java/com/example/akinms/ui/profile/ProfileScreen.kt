@@ -1,7 +1,11 @@
 package com.example.akinms.ui.profile
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -9,7 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -29,9 +36,12 @@ fun ProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxSize(1f),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(1f).background(PrimaryColor),
+            modifier = Modifier
+                .fillMaxWidth(1f)
+                .background(PrimaryColor),
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
@@ -41,16 +51,107 @@ fun ProfileScreen(
             }
             Text(text = "Vista de Usuario", color = Color.White)
         }
-        Column() {
-            Text(text = "Dato de usuario")
-            Text(text = "Dato de usuario")
-            Text(text = "Dato de usuario")
-            Text(text = "Dato de usuario")
-            Button(onClick = { navController.navigate(ProfileScreen.Historial.route)}) {
-                Text(text = "Ver historial de compra")
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth(1f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ){
+            item{
+                Column(modifier = Modifier
+                    .padding(top = 20.dp, bottom = 10.dp)
+                    .fillMaxWidth(.9f)
+                ) {
+                    Text(
+                        modifier = Modifier.padding(vertical = 10.dp),
+                        text = "Datos Personales", fontSize = 18.sp, fontWeight = FontWeight.SemiBold
+                    )
+                    Text(text = "Nombres:")
+                    Box(modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .fillMaxWidth(1f)
+                        .border(
+                            width = 1.dp,
+                            color = PrimaryColor,
+                            shape = RoundedCornerShape(5.dp)
+                        )
+                        .padding(10.dp)) {
+                        Text(text = "Juanito Leonardo")
+                    }
+                    Text(text = "Apellidos:")
+                    Box(modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .fillMaxWidth(1f)
+                        .border(
+                            width = 1.dp,
+                            color = PrimaryColor,
+                            shape = RoundedCornerShape(5.dp)
+                        )
+                        .padding(10.dp)) {
+                        Text(text = "Armando Paredes")
+                    }
+                    Text(text = "Telefono:")
+                    Box(modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .fillMaxWidth(1f)
+                        .border(
+                            width = 1.dp,
+                            color = PrimaryColor,
+                            shape = RoundedCornerShape(5.dp)
+                        )
+                        .padding(10.dp)) {
+                        Text(text = "987654321")
+                    }
+                    Text(text = "Direccion:")
+                    Box(modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .fillMaxWidth(1f)
+                        .border(
+                            width = 1.dp,
+                            color = PrimaryColor,
+                            shape = RoundedCornerShape(5.dp)
+                        )
+                        .padding(10.dp)) {
+                        Text(text = "Av. siempre viva 69")
+                    }
+                }
             }
+            item{
+                Column(modifier = Modifier
 
+                    .fillMaxWidth(.9f)
+                ) {
+                    Text(
+                        modifier = Modifier.padding(vertical = 10.dp),
+                        text = "Historial de Compras",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(1f),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Button(
+                            modifier = Modifier.fillMaxWidth(.78f),
+                            onClick = { navController.navigate(ProfileScreen.Historial.route) }) {
+                            Text(text = "Ver historial")
+                        }
+                        IconButton(onClick = { navController.navigate(ProfileScreen.Historial.route) }) {
+                            Image(
+                                painter = painterResource(id = R.drawable.clock),
+                                contentDescription = ""
+                            )
+                        }
+                    }
+                }
+            }
         }
+        /*Column() {
+            Text(text = "Dato de usuario")
+            Text(text = "Dato de usuario")
+            Text(text = "Dato de usuario")
+            Text(text = "Dato de usuario")
+        }*/
     }
     
 }

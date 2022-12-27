@@ -21,6 +21,9 @@ interface ApiRest {
     @GET("bodegas/listarbodegas/")
     suspend fun getBodegas(): BodegasDto
 
+    @GET("bodegas/listarbodegas/premium")
+    suspend fun getBodegasPremium(): BodegasDto
+
     @GET("bodegas/detalles/{id}")
     suspend fun getBodega(
         @Path("id") id:Long

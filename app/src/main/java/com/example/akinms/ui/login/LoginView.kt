@@ -41,6 +41,7 @@ import androidx.compose.ui.focus.focusOrder
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -53,11 +54,15 @@ import androidx.compose.ui.unit.sp
 
 import com.example.akinms.ui.theme.Shapes
 import com.example.akinms.R
+import com.example.akinms.ui.theme.PrimaryColor
 
 
-@Preview
 @Composable
-fun LoginView() = AkinmsTheme {
+fun LoginView(
+    onClick: () -> Unit,
+    //onSignUpClick: () -> Unit,
+    //onForgotClick: () -> Unit
+) = AkinmsTheme {
     val passwordFocusRequester = FocusRequester()
     val focusManager = LocalFocusManager.current
 
@@ -68,7 +73,9 @@ fun LoginView() = AkinmsTheme {
     if(showDialog.value){
         Alert(msg="Continuar",
             showDialog = showDialog.value,
-            onDismiss = {showDialog.value = false})
+            onDismiss = {showDialog.value = false},
+            onLoginClick = onClick
+        )
     }
 
     // ProvideWindowInsets{
@@ -93,14 +100,17 @@ fun LoginView() = AkinmsTheme {
             painter = painterResource(R.drawable.logo),
             null,
             Modifier
-                .size(200.dp)
+                .padding(top = 60.dp)
+                .size(100.dp)
             //.weight(2f)
             // tint = Color.White
         )
 
         //TITULO
-        Text("INICIO DE SESION", color=Color.Black, textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold, fontSize = 25.sp)
+        Text(
+            modifier = Modifier.padding(top = 65.dp),
+            text = "INICIO DE SESION", color=Color.Black, textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold, fontSize = 22.sp)
 
         //Input email
         TextInput(InputType.Name, keyboardActions = KeyboardActions(onNext = {
@@ -118,29 +128,31 @@ fun LoginView() = AkinmsTheme {
         Button(onClick = {showDialog.value = true}, modifier = Modifier
             .height(50.dp)
             .width(250.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = botonAzul,
+            colors = ButtonDefaults.buttonColors(backgroundColor = PrimaryColor,
                 contentColor = Color.White)){
-            Text("Ingresar", Modifier.padding(vertical = 8.dp))
+            Text("Ingresar", Modifier.padding(vertical = 2.dp))
         }
 
         //Recuperar contraseña
-        TextButton(onClick = {}) {
-            Text("¿No recuerda su contraseña?")
-        }
+        Text("¿No recuerda su contraseña?", color = PrimaryColor)
+        /*TextButton(onClick = {}) {
+
+        }*/
 
         //Crear cuenta
         Row(verticalAlignment = Alignment.CenterVertically){
             Text("¿No tiene una cuenta?", color = Color.Black)
-            TextButton(onClick = {}) {
-                Text("Crear Cuenta")
-            }
+            Text("  Crear Cuenta", color = PrimaryColor)
+            /*TextButton(onClick = {}) {
+
+            }*/
         }
 
 
         Divider(
             color = Color.White.copy(alpha = 0.3f),
             thickness = 1.dp,
-            modifier = Modifier.padding(top = 45.dp)
+            modifier = Modifier.padding(top = 15.dp)
         )
 
         Row(verticalAlignment = Alignment.CenterVertically, modifier =  Modifier.padding(bottom = 30.dp)) {
@@ -186,39 +198,43 @@ fun TextInput(
         value = value,
         onValueChange = { value = it },
         modifier = Modifier
-            .height(65.dp)
+            .height(60.dp)
             .width(300.dp)
             .focusOrder(focusRequester ?: FocusRequester()),
-        leadingIcon = { Icon(imageVector = inputType.icon, null, tint = Color.Black)},
+        leadingIcon = { Icon(imageVector = inputType.icon, null, tint = PrimaryColor)},
         label = { Text(text = inputType.label)},
         shape = Shapes.small,
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.Transparent,
-            focusedIndicatorColor = Color.Black,
-            unfocusedIndicatorColor = Color.Black,
+            backgroundColor = Color.White,
+            focusedIndicatorColor = PrimaryColor,
+            unfocusedIndicatorColor = PrimaryColor,
             disabledIndicatorColor = Color.Black,
-            placeholderColor = Color.Black
+            placeholderColor = Color.Gray,
+            focusedLabelColor = Color.Black
         ),
+        textStyle = TextStyle(fontSize = 14.sp),
         singleLine = true,
         keyboardOptions = inputType.keyboardOptions,
         visualTransformation = inputType.visualTransformation,
         keyboardActions = keyboardActions,
-
         )
+    //Outli
 }
 
 @Composable
 fun Alert(msg : String,
           showDialog: Boolean,
-          onDismiss: () -> Unit) {
+          onDismiss: () -> Unit,
+          onLoginClick: () -> Unit
+) {
 
     if (showDialog) {
-        val colorAlerta = Color(0xff52CA73)
+        val colorAlerta = Color(0xFF70D68C)
         AlertDialog(
             onDismissRequest = onDismiss,
             confirmButton = {
-                TextButton(onClick = onDismiss ) {
-                    Text(msg, color = Color.Black, textAlign = TextAlign.Right)
+                TextButton(onClick = onLoginClick ) {
+                    Text(msg, color = PrimaryColor, textAlign = TextAlign.Right)
                 }
             },
             title={
@@ -229,22 +245,22 @@ fun Alert(msg : String,
                     //Icon(Modifier.size(26.dp),
                     //painterResource(R.drawable.check_icon))
                     Image(
-                        painterResource(id = R.drawable.check_icon),
+                        painterResource(id = R.drawable.checked),
                         contentDescription = null,
                         Modifier
                             .align(Alignment.Center)
-                            .size(100.dp,100.dp)
+                            .size(70.dp,70.dp)
                     )
                 }
             },
             text = {
                 Text(text = "Inicio de Sesion Exitoso",
                     textAlign = TextAlign.Center,
-                    color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 20.sp,
+                    color = Color(0xFF32BA7C), fontWeight = FontWeight.SemiBold, fontSize = 18.sp,
                     modifier = Modifier.fillMaxWidth())
             },
-            backgroundColor = colorAlerta,
-            shape = RoundedCornerShape(25.dp)
+            backgroundColor = Color.White,
+            shape = RoundedCornerShape(5.dp)
 
 
         )

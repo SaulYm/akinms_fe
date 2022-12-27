@@ -1,18 +1,18 @@
-package com.example.akinms.ui.profile. historial
+package com.example.akinms.ui.profile.historial
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,15 +26,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-import com.example.akinms.Minimarket
 import com.example.akinms.R
-import com.example.akinms.components.CartProductItem
 import com.example.akinms.components.CartTotalResume
-import com.example.akinms.data.source.remote.dto.pedido.Pedido
 import com.example.akinms.data.source.remote.dto.pedido.PedidoX
 import com.example.akinms.data.source.remote.dto.pedido.Producto
-import com.example.akinms.domain.model.CartItem
-import com.example.akinms.ui.bodega.cart.CartViewModel
 import com.example.akinms.ui.profile.DetalleState
 import com.example.akinms.ui.profile.DetalleViewModel
 import com.example.akinms.ui.profile.ProfileState
@@ -46,7 +41,110 @@ fun DetailsScreen(
     detalleViewModel: DetalleViewModel = hiltViewModel()
 ){
     var state: DetalleState = detalleViewModel.state
+    var pedido = state.pedidos
+    var tamanio = state.pedidos?.detallesPedido?.size
+    var detalles = state.pedidos?.detallesPedido
+    /*Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(
+                onClick = { navController.popBackStack() }
+            ) {
+                Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "")
+            }
+            Text(text = "DETALLES DEL PEDIDO")
+        }
+        Text(text = "AQUI IRÍAN LOS DETALLES DEL PEDIDO SI MIS COMPAS LO HUBIERAN HECHO")
+        println("RESULTADO DEL PEDIO:        " + state.pedidos?.detallesPedido?.get(0)?.producto?.nombre)
+        Text(text = tamanio.toString())
+        if(tamanio!=null){
+            for(a in 0..tamanio-1){
+                Text(text = detalles?.get(a)?.producto?.nombre!!)
+            }
+        }
 
+    }*/
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth(1f)
+            .padding(bottom = 20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        content = {
+            item{
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 5.dp),
+                    text = "Carrito de Compras",
+                    textAlign = TextAlign.Center,
+                    color = Color(0xFF03AC00),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            println("SAUL SE LA COMEEEEEEEEEEEEEE: "+state.pedidos?.fecha)
+            //var pedido: PedidoX = state.pedidos!!
+
+            // sdsdsdsdsds
+            if(tamanio!=null){
+                if(tamanio > 0){
+                    var total: Double = 0.0
+                    var precio: Double?
+                    var cantidad: Int
+                    if(detalles!=null){
+                        for(detalle in detalles) {
+                            precio = detalle.producto.precio
+                            cantidad = detalle.cantidad
+                            total += precio!! * cantidad
+
+                            item {
+                                //CartProductItem(cantidad)
+                                println(pedido!!.detallesPedido.size)
+                                //CartList(cartList = cartItems)
+                                productoDetalle(detalle.producto, cantidad)
+                            }
+
+                        }
+
+
+                        item{
+                            CartTotalResume(total = total)
+                        }
+                        item{
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                                Button(
+                                    modifier = Modifier.width(200.dp),
+                                    onClick = { navController.navigate(BodegaScreen.CheckOut.route) }
+                                ) {
+                                    Text(text = "Continuar CheckOut")
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+                else{
+                    item {
+                        Text(
+                            text = "Carrito Vacio"
+                        )
+                    }
+                }
+            }
+
+
+        }
+    )
+    /*var state = detalleViewModel.state
+    println("AFLKSADJFLKSADJFLKSDJLFKJSDA: "+state.pedidos?.fecha)
     Scaffold(
         topBar = {
             //NavBarTop(minimarket,navController)
@@ -70,8 +168,10 @@ fun DetailsScreen(
                         fontWeight = FontWeight.Bold
                     )
                 }
-                var pedido: PedidoX? = state.pedidos
+                println("SAUL SE LA COMEEEEEEEEEEEEEE: "+state.pedidos?.fecha)
+                var pedido: PedidoX = state.pedidos!!
 
+                // sdsdsdsdsds
                 if(pedido?.detallesPedido?.size!! > 0){
                     var total: Double = 0.0
                     var precio: Double?
@@ -117,7 +217,7 @@ fun DetailsScreen(
 
             }
         )
-    }
+    }*/
 }
 
 
@@ -185,14 +285,14 @@ fun productoDetalle(
             modifier = Modifier.padding(end = 10.dp),
             verticalArrangement = Arrangement.Center
         ) {
-            var cantidad = remember { mutableStateOf(cantidad) }
+            //var cantidad = remember { mutableStateOf(cantidad) }
             //IncDecBtn(item = item, context = context, viewModel = viewModel)
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "Cantidad:")
-                Row(
+                Text(text = "Cantidad: "+cantidad)
+                /*Row(
                     modifier = Modifier
                         .padding(top = 8.dp)
                         .border(
@@ -204,7 +304,7 @@ fun productoDetalle(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        cantidad.toString()
+                        cantidad
                     )
                     /*Box(
                         modifier = Modifier
@@ -253,14 +353,16 @@ fun productoDetalle(
                     ) {
                         Text(modifier = Modifier.align(Alignment.Center), text = "+")
                     }*/
-                }
+                }*/
             }
             IconButton(
                 modifier = Modifier
                     .background(Color(0xFFE5383B))
-                    .border(width = 1.dp,
+                    .border(
+                        width = 1.dp,
                         color = Color(0xFFE5383B),
-                        shape = RoundedCornerShape(5.dp))
+                        shape = RoundedCornerShape(5.dp)
+                    )
                     .padding(0.dp),
                 onClick = { /*viewModel.deleteCartItem(item)*/ }
             ) {
@@ -282,4 +384,3 @@ fun productoDetalle(
         }
     }
 }
-

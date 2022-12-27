@@ -27,7 +27,7 @@ fun HomeView(navController: NavHostController){
                     //SomeCategories(navController = navController)
                 }
                 item {
-                    Other(navController)
+                    //Other(navController)
                 }
             }
         )
