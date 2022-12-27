@@ -28,6 +28,7 @@ fun AkinmsApp(){
             navigateToCart = navigationActions.navigateToCart,
         )*/
         //LoginView()
+        //HomeScreenV2()
         MainScreen(navController = navController)
         //MapsScreen(navController = navController)
         //RootNavigationGraph(navController = navController)
