@@ -22,7 +22,6 @@ class PedidoRepositoryImpl @Inject constructor(
         try{
             val response = api.getPedidoByClient(id).toPedidos()
             emit(Result.Success(response))
-
         } catch (e: HttpException){
             emit(Result.Error(
                 message = "Oops, something went wrong",
@@ -42,6 +41,7 @@ class PedidoRepositoryImpl @Inject constructor(
         } catch (e:java.lang.Exception){
             return Result.Error("An unknown error occurred")
         }
+        println("LLEGO ACÁ GAAAAAAAAAAAAAAAAAAAAAAA")
         return Result.Success(response.toPedidos())
     }
 

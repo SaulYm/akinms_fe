@@ -1,6 +1,9 @@
 package com.example.akinms.ui.bodega
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import com.example.akinms.util.navigationGraph.BodegaScreen.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Button
@@ -8,6 +11,10 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -83,6 +90,8 @@ fun BodegaScreen(
                 //cantidadCarrito.value = cartBodega.size
                 composable(route = Bodega.route){
                     LazyColumn(
+                        modifier = Modifier.fillMaxWidth(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                         content = {
                             item {
                                 SearchBar(
@@ -95,12 +104,17 @@ fun BodegaScreen(
                                 SomeCategories(navController = navController, category = someCategorias, idBodega = bodega.id)
                             }
                             item {
-                                Button(onClick = { navController.navigate(Products.route+"/"+bodega.id) }) { //cambiar el 2 por el id de la bodega
-                                    Text(text = "Ver productos")
+                                Button(
+                                    modifier = Modifier.padding(top = 20.dp, bottom = 10.dp).fillMaxWidth(.9f),
+                                    onClick = { navController.navigate(Products.route+"/"+bodega.id) }
+                                ) { //cambiar el 2 por el id de la bodega
+                                    Text(text = "Ver Catalogo de productos    ")
+                                    Image(painter = painterResource(id = com.example.akinms.R.drawable.dairy), contentDescription = "")
                                 }
                             }
                             item {
-                                Other(navController)
+                                var ruta = Products.route+"/"+bodega.id
+                                Other(navController = navController, ruta = ruta)
                             }
                         }
                     )

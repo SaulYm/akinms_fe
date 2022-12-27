@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.akinms.ui.login.LoginView
 
 fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
     navigation(
@@ -23,6 +24,12 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
                     navController.navigate(AuthScreen.Forgot.route)
                 }
             )*/
+            LoginView(
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate(Graph.HOME)
+                }
+            )
         }
         composable(route = AuthScreen.SignUp.route) {
             //ScreenContent(name = AuthScreen.SignUp.route) {}

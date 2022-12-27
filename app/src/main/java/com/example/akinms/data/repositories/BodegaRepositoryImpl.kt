@@ -18,18 +18,34 @@ class BodegaRepositoryImpl @Inject constructor(
     override fun getBodegas(): Flow<Result<List<Bodega>>> = flow() {
         emit(Result.Loading())
         try{
-            println("LLAMANDO A GETBODEGAS")
             val response = api.getBodegas().toListBodegas()
             emit(Result.Success(response))
 
         } catch (e: HttpException){
-            println("ERROR INTERNO")
             emit(Result.Error(
                 message = "Oops, something went wrong",
                 data = null
             ))
         } catch (e: IOException){
-            println("ERROR INTERNET")
+            emit(Result.Error(
+                message = "Couldn't reach server, check your internet connection",
+                data = null
+            ))
+        }
+    }
+
+    override fun getBodegasPremium(): Flow<Result<List<Bodega>>> = flow {
+        emit(Result.Loading())
+        try{
+            val response = api.getBodegasPremium().toListBodegas()
+            emit(Result.Success(response))
+
+        } catch (e: HttpException){
+            emit(Result.Error(
+                message = "Oops, something went wrong",
+                data = null
+            ))
+        } catch (e: IOException){
             emit(Result.Error(
                 message = "Couldn't reach server, check your internet connection",
                 data = null
