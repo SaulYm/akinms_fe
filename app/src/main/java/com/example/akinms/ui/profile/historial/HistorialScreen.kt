@@ -55,13 +55,6 @@ fun HistorialScreen(
             }
             Text(text = "Historial de Compras")
         }
-        /*Text(text = "AQUI IRÍA EL HISTORIAL SI MIS COMPAS LO HUBIERAN HECHO")
-        Button(onClick = { navController.navigate(HistorialScreen.Status.route) }) {
-            Text(text = "Ver estado del pedido")
-        }
-        Button(onClick = { navController.navigate(HistorialScreen.Details.route) }) {
-            Text(text = "Ver detalles del pedido")
-        }*/
         Row (
             modifier = Modifier
                 .padding(top = 10.dp, bottom = 5.dp, start = 10.dp, end = 10.dp)
@@ -175,16 +168,11 @@ fun HistorialScreen(
                                     }
                                     i++
                                 }
-                                /*Image(
-                                    painterResource(R.drawable.bebidas),"cocacola",
-                                    modifier = Modifier
-                                        .height(40.dp)
-                                        .weight(40f)
-                                )*/
+
                                 if(pedido.detallesPedido.size > 6){
                                     var cantProdExtra: Int = pedido.detallesPedido.size - 6
                                     Text(
-                                        cantProdExtra.toString(),
+                                        "+"+cantProdExtra.toString(),
                                         modifier = Modifier
                                             .height(20.dp)
                                             .width(25.dp)
