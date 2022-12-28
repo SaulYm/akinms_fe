@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,6 +34,7 @@ import com.example.akinms.data.source.remote.dto.pedido.Producto
 import com.example.akinms.ui.profile.DetalleState
 import com.example.akinms.ui.profile.DetalleViewModel
 import com.example.akinms.ui.profile.ProfileState
+import com.example.akinms.ui.theme.PrimaryColor
 import com.example.akinms.util.navigationGraph.BodegaScreen
 
 @Composable
@@ -44,10 +46,10 @@ fun DetailsScreen(
     var pedido = state.pedidos
     var tamanio = state.pedidos?.detallesPedido?.size
     var detalles = state.pedidos?.detallesPedido
-    /*Column(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(8.dp),
+            .padding(vertical = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(
@@ -59,40 +61,48 @@ fun DetailsScreen(
             ) {
                 Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "")
             }
-            Text(text = "DETALLES DEL PEDIDO")
+            Text(
+                modifier = Modifier.padding(start = 34.dp),
+                text = "Información de Compra",
+                color = Color.Black,
+                fontSize = 23.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
         }
-        Text(text = "AQUI IRÍAN LOS DETALLES DEL PEDIDO SI MIS COMPAS LO HUBIERAN HECHO")
-        println("RESULTADO DEL PEDIO:        " + state.pedidos?.detallesPedido?.get(0)?.producto?.nombre)
-        Text(text = tamanio.toString())
-        if(tamanio!=null){
-            for(a in 0..tamanio-1){
-                Text(text = detalles?.get(a)?.producto?.nombre!!)
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            HistText( pedido?.bodega?.direccion+" - "+pedido?.bodega?.nombre.toString(),18, FontWeight.Bold, Color.Black)
+            Row() {
+                HistText("ID:",15, FontWeight.Normal, PrimaryColor)
+                HistText(pedido?.idpedido.toString(),15, FontWeight.Normal, Color.Black)
             }
         }
 
-    }*/
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 7.dp,horizontal = 20.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            HistText( pedido?.fecha.toString(),15, FontWeight.Normal, Color.Gray)
+            HistText("* * * * *",15, FontWeight.Normal)
+        }
+    }
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth(1f)
-            .padding(bottom = 20.dp),
+            .padding(top = 113.dp, bottom = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         content = {
-            item{
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 5.dp),
-                    text = "Carrito de Compras",
-                    textAlign = TextAlign.Center,
-                    color = Color(0xFF03AC00),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            println("SAUL SE LA COMEEEEEEEEEEEEEE: "+state.pedidos?.fecha)
-            //var pedido: PedidoX = state.pedidos!!
 
-            // sdsdsdsdsds
             if(tamanio!=null){
                 if(tamanio > 0){
                     var total: Double = 0.0
@@ -112,24 +122,10 @@ fun DetailsScreen(
                             }
 
                         }
-
-
                         item{
                             CartTotalResume(total = total)
                         }
-                        item{
-                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                                Button(
-                                    modifier = Modifier.width(200.dp),
-                                    onClick = { navController.navigate(BodegaScreen.CheckOut.route) }
-                                ) {
-                                    Text(text = "Continuar CheckOut")
-                                }
-                            }
-
-                        }
                     }
-
                 }
                 else{
                     item {
@@ -139,98 +135,16 @@ fun DetailsScreen(
                     }
                 }
             }
-
-
         }
     )
-    /*var state = detalleViewModel.state
-    println("AFLKSADJFLKSADJFLKSDJLFKJSDA: "+state.pedidos?.fecha)
-    Scaffold(
-        topBar = {
-            //NavBarTop(minimarket,navController)
-        },
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth(1f)
-                .padding(bottom = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            content = {
-                item{
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 5.dp),
-                        text = "Carrito de Compras",
-                        textAlign = TextAlign.Center,
-                        color = Color(0xFF03AC00),
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                println("SAUL SE LA COMEEEEEEEEEEEEEE: "+state.pedidos?.fecha)
-                var pedido: PedidoX = state.pedidos!!
-
-                // sdsdsdsdsds
-                if(pedido?.detallesPedido?.size!! > 0){
-                    var total: Double = 0.0
-                    var precio: Double?
-                    var cantidad: Int
-
-                    for(detalle in pedido!!.detallesPedido) {
-                        precio = detalle.producto.precio
-                        cantidad = detalle.cantidad
-                        total += precio!! * cantidad
-
-                        item {
-                            //CartProductItem(cantidad)
-                            println(pedido!!.detallesPedido.size)
-                            //CartList(cartList = cartItems)
-                            productoDetalle(detalle.producto, cantidad)
-                        }
-
-                    }
-
-
-                    item{
-                        CartTotalResume(total = total)
-                    }
-                    item{
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                            Button(
-                                modifier = Modifier.width(200.dp),
-                                onClick = { navController.navigate(BodegaScreen.CheckOut.route) }
-                            ) {
-                                Text(text = "Continuar CheckOut")
-                            }
-                        }
-
-                    }
-                }
-                else{
-                    item {
-                        Text(
-                            text = "Carrito Vacio"
-                        )
-                    }
-                }
-
-            }
-        )
-    }*/
 }
 
 
 @Composable
 fun productoDetalle(
-    //cantidad: MutableState<Int>
     item: Producto,
     cantidad: Int
-    //viewModel: CartViewModel,
-    //navController: NavHostController,
-    //idBodega: Int,
 ){
-    //var cantidad = remember { mutableStateOf(1) }
     val context: Context = LocalContext.current
     Row(
         modifier = Modifier
@@ -241,17 +155,15 @@ fun productoDetalle(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Row(
-
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(100.dp)
                     .clip(shape = RoundedCornerShape(10.dp))
-                    .background(Color(0xFFFFC532))
+                    .background(PrimaryColor)
 
             ){
-
                 Image(
                     modifier = Modifier.align(Alignment.Center),
                     painter = rememberAsyncImagePainter(item.img),
@@ -264,123 +176,28 @@ fun productoDetalle(
                 verticalArrangement = Arrangement.SpaceAround
             ) {
                 Text(
-                    modifier = Modifier.width(100.dp),
+                    modifier = Modifier.width(240.dp),
                     text = item.nombre!!,
                     fontSize = 16.sp
                 )
                 Text(
+                    modifier = Modifier.width(240.dp),
                     text = item.descripcion!!,
                     fontSize = 14.sp,
                     color = Color.Gray
                 )
-                Text(
-                    modifier = Modifier.padding(top = 16.dp),
-                    text = "S/. "+item.precio.toString(),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-        Column(
-            modifier = Modifier.padding(end = 10.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
-            //var cantidad = remember { mutableStateOf(cantidad) }
-            //IncDecBtn(item = item, context = context, viewModel = viewModel)
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = "Cantidad: "+cantidad)
-                /*Row(
+                
+                Row(
                     modifier = Modifier
-                        .padding(top = 8.dp)
-                        .border(
-                            width = 1.dp,
-                            color = Color(0xFFD9D9D9),
-                            shape = RoundedCornerShape(10.dp)
-                        ),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                        .fillMaxWidth()
+                        .padding(top = 16.dp, end = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(
-                        cantidad
-                    )
-                    /*Box(
-                        modifier = Modifier
-                            .width(30.dp)
-                            .height(30.dp)
-                            .background(Color(0xFFD9D9D9))
-                            .clickable {
-                                if (cantidad.value > 1) {
-                                    cantidad.value--
-                                    //cantidad = cantidad.value
-                                    /*viewModel.updateCartItem(item)
-                                    navController.popBackStack()
-                                    navController.navigate(BodegaScreen.Cart.route+"/"+idBodega)*/
-                                } else {
-                                    Toast
-                                        .makeText(
-                                            context,
-                                            "Cantidad minima es 1",
-                                            Toast.LENGTH_SHORT
-                                        )
-                                        .show()
-                                }
-                            }
-                    ){
-                        Text(modifier = Modifier.align(Alignment.Center), text = "-")
-                    }
-                    Box(
-                        modifier = Modifier
-                            .width(38.dp)
-                            .height(30.dp)
-                    ){
-                        Text(modifier = Modifier.align(Alignment.Center), text = cantidad.value.toString())
-                    }
-                    Box(
-                        modifier = Modifier
-                            .width(30.dp)
-                            .height(30.dp)
-                            .background(Color(0xFFD9D9D9))
-                            .clickable {
-                                cantidad.value++
-                                //cantidad = cantidad.value
-                                /*viewModel.updateCartItem(item)
-                                navController.popBackStack()
-                                navController.navigate(BodegaScreen.Cart.route+"/"+idBodega)*/
-                            }
-                    ) {
-                        Text(modifier = Modifier.align(Alignment.Center), text = "+")
-                    }*/
-                }*/
+                    HistText("S/. "+item.precio.toString(),16, FontWeight.Bold)
+                    HistText("Cant: "+cantidad.toString(),16)
+                }
             }
-            IconButton(
-                modifier = Modifier
-                    .background(Color(0xFFE5383B))
-                    .border(
-                        width = 1.dp,
-                        color = Color(0xFFE5383B),
-                        shape = RoundedCornerShape(5.dp)
-                    )
-                    .padding(0.dp),
-                onClick = { /*viewModel.deleteCartItem(item)*/ }
-            ) {
-                Icon(Icons.Rounded.Delete, contentDescription = "", tint = Color.White)
-            }
-            /*Button(
-                onClick = {
-                    viewModel.deleteCartItem(item)
-                },
-                modifier = Modifier.width(90.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color(0xFFE5383B),
-                    contentColor = Color(0xFFFFFFFF)
-                ),
-            ) {
-                Text(text = "Eliminar", fontSize = 12.sp)
-            }*/
         }
     }
 }
