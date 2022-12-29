@@ -33,27 +33,27 @@ import org.w3c.dom.Text
 @Composable
 fun HistorialScreen(
     navController: NavHostController,
-    profileViewModel: ProfileViewModel = hiltViewModel()
-    //onBackClick: Boolean,
+    historialViewModel: HistorialViewModel = hiltViewModel()
 ){
-    var state: ProfileState = profileViewModel.state
-    //profileViewModel.getPedidos()
+    var state: HistorialState = historialViewModel.state
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(8.dp),
+            .padding(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(1f)
+                .background(PrimaryColor),
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
                 onClick = { navController.popBackStack() }
             ) {
-                Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "")
+                Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "", tint = Color.White)
             }
-            Text(text = "Historial de Compras")
+            Text(text = "Historial de Compras", color = Color.White,fontWeight = FontWeight.Bold,)
         }
         Row (
             modifier = Modifier
@@ -72,27 +72,26 @@ fun HistorialScreen(
             )
             HistText(text = state.pedidos.size.toString()+" Compras",13, FontWeight.Bold, Color.Gray)
         }
-        Divider(startIndent = 8.dp, thickness = 1.dp, color = Color.Black)
+        Divider(startIndent = 8.dp, thickness = 0.5.dp, color = Color.LightGray)
         LazyColumn(
             modifier = Modifier
-                .padding(top = 5.dp)
+                .padding(top = 2.dp)
         ) {
             item {
-                println("ERROR AQUI "+state.pedidos.size)
                 for(pedido in state.pedidos) {
                     Box(
                         modifier = Modifier
-                            .padding(20.dp)
-                            .clip(RoundedCornerShape(10))
-                            .border(BorderStroke(0.7.dp, Color.Gray),
-                                shape = RoundedCornerShape(10))
-                            .background(Color.White)
                             .padding(10.dp)
+                            .clip(RoundedCornerShape(5))
+                            .border(BorderStroke(1.dp, PrimaryColor),
+                                shape = RoundedCornerShape(5))
+                            .background(Color.White)
+                            .padding(3.dp)
 
                     ) {
                         Column(
                             modifier = Modifier
-                                .padding(7.dp)
+                                .padding(8.dp)
                         ) {
                             Column() {
                                 Row(
@@ -170,15 +169,15 @@ fun HistorialScreen(
                                 }
 
                                 if(pedido.detallesPedido.size > 6){
-                                    var cantProdExtra: Int = pedido.detallesPedido.size - 6
+                                    var cantProdExtra: Int = pedido.detallesPedido.size - 5
                                     Text(
-                                        "+"+cantProdExtra.toString(),
+                                        "+ "+cantProdExtra.toString(),
                                         modifier = Modifier
-                                            .height(20.dp)
-                                            .width(25.dp)
+                                            .height(25.dp)
+                                            .width(30.dp)
                                             .align(Alignment.CenterVertically)
                                             .clip(RoundedCornerShape(20))
-                                            .background(Color.Gray)
+                                            .background(Color.LightGray)
                                         ,
                                         textAlign = TextAlign.Center
                                     )
@@ -194,7 +193,7 @@ fun HistorialScreen(
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
                                     HistText("Valoracion",13, FontWeight.Bold, Color.Gray)
-                                    HistText("* * * * * * * * *",12, FontWeight.Bold)
+                                    HistText("* * * * *",16, FontWeight.Bold, color = PrimaryColor)
                                 }
 
                                 Column(
@@ -233,8 +232,4 @@ fun HistText (text: String, size: Int = 13, fontWeight: FontWeight = FontWeight.
     )
 }
 
-@Composable
-fun detallePedido(){
-    // Capturar los detalles del pedido
-}
 

@@ -1,4 +1,4 @@
-package com.example.akinms.components
+package com.example.akinms.ui.components
 
 import com.example.akinms.R
 import androidx.compose.foundation.Image
@@ -46,7 +46,6 @@ fun NavBarTop(
     }
     var cantidad by remember { mutableStateOf("") }
     cantidad = cartBodega.size.toString()
-    println("CURRENT DESTINATION NAVTOPBAR:  "+navController.currentDestination)
     /*var cantidad2 = 0
     var cantidad = remember { mutableStateOf(cantidad2) }
     //var minimarket: Minimarket = Minimarket()
@@ -82,7 +81,6 @@ fun NavBarTop(
                     navController.popBackStack()
                 }
                 else{
-                    println("NAV CONTROLLER IN NAV BAR TOP: " + navController.currentDestination?.route)
                     coreController.popBackStack()
                 }
 

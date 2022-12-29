@@ -17,29 +17,6 @@ fun ProductList(
     list: List<Products>,
     idBodega: Int,
 ) {
-    /*LazyVerticalGrid(
-        cells = GridCells.Adaptive(minSize = 128.dp),
-        contentPadding = PaddingValues(10.dp)
-    ) {
-        items(20) {
-            ProductItem()
-        }
-    }
-    */
-    /*var lista: List<Producto> = listOf(
-        Producto("Cerveza pilsen","1 unid | 355ml",6.50,"pilsen355"),
-        Producto("Cerveza pilsen2","1 unid | 355ml",6.50,"pilsen355"),
-        Producto("Cerveza pilsen3","1 unid | 355ml",6.50,"pilsen355"),
-        Producto("Cerveza pilsen4","1 unid | 355ml",6.50,"pilsen355"),
-        Producto("Cerveza pilsen5","1 unid | 355ml",6.50,"pilsen355"),
-        Producto("Cerveza pilsen6","1 unid | 355ml",6.50,"pilsen355"),
-        Producto("Cerveza pilsen7","1 unid | 355ml",6.50,"pilsen355"),
-        Producto("Cerveza pilsen8","1 unid | 355ml",6.50,"pilsen355"),
-        Producto("Cerveza pilsen9","1 unid | 355ml",6.50,"pilsen355"),
-        Producto("Cerveza pilsen10","1 unid | 355ml",6.50,"pilsen355"),
-        Producto("Cerveza pilsen11","1 unid | 355ml",6.50,"pilsen355"),
-    )*/
-
     Column(
         modifier = Modifier
             .fillMaxWidth()

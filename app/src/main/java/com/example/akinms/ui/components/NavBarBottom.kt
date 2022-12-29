@@ -1,4 +1,4 @@
-package com.example.akinms.components
+package com.example.akinms.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -18,8 +18,6 @@ fun AllCategories(
     category: List<Categoria>,
     idBodega: Int,
 ){
-    /*val category = listOf(Category(),Category(),Category(),Category(),Category(),Category(),
-        Category(),Category(),Category(),Category(),Category(),Category(),)*/
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {

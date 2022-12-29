@@ -7,10 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.akinms.data.Result
 import com.example.akinms.domain.use_case.GetBodegasUseCase
-import com.example.akinms.ui.bodega.products.ProductsViewModel
-import com.example.akinms.util.AppNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn

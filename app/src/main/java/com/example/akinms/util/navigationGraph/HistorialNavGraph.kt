@@ -13,9 +13,11 @@ import com.example.akinms.ui.profile.historial.StatusScreen
 fun NavGraphBuilder.historialNavGraph(navController: NavHostController) {
     navigation(
         route = Graph.HISTORIAL,
-        startDestination = ProfileScreen.Historial.route
+        startDestination = ProfileScreen.Historial.route+"/{id_cliente}"
     ) {
-        composable(route = ProfileScreen.Historial.route) {
+        composable(route = ProfileScreen.Historial.route+"/{id_cliente}",
+        arguments = listOf(navArgument("id_cliente"){type = NavType.LongType},)
+        ) {
             HistorialScreen(navController = navController)
         }
         composable(route = HistorialScreen.Status.route){

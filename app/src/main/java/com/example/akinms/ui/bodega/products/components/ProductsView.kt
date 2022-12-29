@@ -14,6 +14,8 @@ import com.example.akinms.Minimarket
 import com.example.akinms.components.*
 import com.example.akinms.domain.model.Categoria
 import com.example.akinms.domain.model.Products
+import com.example.akinms.ui.components.CategoriesSelector
+import com.example.akinms.ui.components.SearchBar
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

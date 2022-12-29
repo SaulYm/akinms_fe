@@ -35,9 +35,6 @@ fun NavGraphBuilder.bodegaNavGraph(navController: NavHostController) {
         composable(route = BodegaScreen.Cart.route) {
             //CartScreen(navController = navController)
         }
-        /*composable(route = BodegaScreen.Products.route){
-            ProductsScreen(navController = navController)
-        }*/
     }
 }
 sealed class BodegaScreen(val route: String) {

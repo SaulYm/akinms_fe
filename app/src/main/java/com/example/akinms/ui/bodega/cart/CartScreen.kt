@@ -15,11 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.akinms.Minimarket
 import com.example.akinms.components.*
 import com.example.akinms.domain.model.CartItem
-import com.example.akinms.domain.model.Categoria
-import com.example.akinms.ui.bodega.cart.components.CartList
 import com.example.akinms.util.navigationGraph.BodegaScreen
 
 @Composable
@@ -29,21 +26,13 @@ fun CartScreen(
     idBodega: Int,
 ){
     val cartItems by viewModel.items.collectAsState(initial = emptyList())
-        /*.collectAsState(
-        initial = emptyList()
-    )*/
 
     var cartBodega = mutableListOf<CartItem>()
     for(item in cartItems){
         if(item.idBodega == idBodega)
             cartBodega.add(item)
     }
-    println("TAMAÑO DEL CARRITO:        "+cartItems.size)
-    val minimarket: Minimarket = Minimarket()
     Scaffold(
-        topBar = {
-            //NavBarTop(minimarket,navController)
-        },
     ) {
         LazyColumn(
             modifier = Modifier
@@ -68,9 +57,6 @@ fun CartScreen(
                     cartBodega.forEach {
                         total += it.precio*it.cantidad
                         item {
-                            //CartProductItem(cantidad)
-                            println(cartItems.size)
-                            //CartList(cartList = cartItems)
                             CartProductItem(item = it, viewModel = viewModel,navController=navController,idBodega)
                         }
                     }

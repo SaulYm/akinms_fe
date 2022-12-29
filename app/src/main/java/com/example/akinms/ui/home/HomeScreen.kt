@@ -1,5 +1,6 @@
 package com.example.akinms.ui.home
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -44,6 +45,7 @@ import com.example.akinms.util.navigationGraph.Graph
 import com.example.akinms.util.navigationGraph.coreNavGraph
 import com.example.akinms.util.navigationGraph.profileNavGraph
 
+@SuppressLint("UnrememberedGetBackStackEntry")
 @Composable
 fun HomeScreen(
     navController: NavHostController,
@@ -51,6 +53,8 @@ fun HomeScreen(
 ) {
     var state = homeViewModel.state
     var bodegasPremium = state.bodegas
+    var idCliente = navController.getBackStackEntry(Graph.HOME+"/{idcliente}").arguments?.getLong("idcliente")
+    println("ID DEL CLIENTE: "+idCliente)
     Scaffold(
         modifier = Modifier.fillMaxWidth(1f),
         topBar = {
@@ -103,7 +107,7 @@ fun HomeScreen(
                                         shape = RoundedCornerShape(5.dp)
                                     )
                                     .clickable {
-                                        navController.navigate(Graph.BODEGA+"/"+bode.id)
+                                        navController.navigate(Graph.BODEGA+"/cliente/"+idCliente+"/"+bode.id)
                                     }
                             ) {
                                 Box(modifier = Modifier
@@ -156,11 +160,11 @@ fun HomeScreen(
                     verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(200.dp)) {
                         Text(text = "Seleccione Bodega",textAlign = TextAlign.Center)
-                        Button(onClick = { navController.navigate(CoreScreen.Maps.route) }) {
+                        Button(onClick = { navController.navigate(CoreScreen.Maps.route+"/"+idCliente) }) {
                             Text(text = "Abrir Mapa")
                         }
                     }
-                    IconButton(modifier = Modifier.width(150.dp),onClick = { navController.navigate(CoreScreen.Maps.route) }) {
+                    IconButton(modifier = Modifier.width(150.dp),onClick = { navController.navigate(CoreScreen.Maps.route+"/"+idCliente) }) {
                         Image(
                             modifier = Modifier.height(120.dp),
                             painter = painterResource(id = R.drawable.gps), contentDescription = "")

@@ -1,5 +1,6 @@
 package com.example.akinms.ui.Maps.bodegas
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,11 +26,14 @@ import com.example.akinms.util.navigationGraph.CoreScreen
 import com.example.akinms.util.navigationGraph.Graph
 import kotlinx.coroutines.flow.collectLatest
 
+@SuppressLint("UnrememberedGetBackStackEntry")
 @Composable
 fun TodasBodegasScreen(
     navController: NavHostController,
     mapsViewModel: MapsViewModel = hiltViewModel()
 ){
+    var idCliente = navController.getBackStackEntry(Graph.HOME+"/{idcliente}").arguments?.getLong("idcliente")
+    println("ID DEL CLIENTE: "+idCliente)
     val state = mapsViewModel.state
     val eventFlow = mapsViewModel.eventFlow
     val scaffoldState = rememberScaffoldState()
@@ -58,7 +62,7 @@ fun TodasBodegasScreen(
             ) {
                 Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "", tint = Color.White)
             }
-            Text(text = "Encuentra tu bodega cercana", color = Color.White)
+            Text(text = "Encuentra tu bodega cercana", color = Color.White,fontWeight = FontWeight.Bold,)
         }
         LazyColumn(
             modifier = Modifier
@@ -69,7 +73,7 @@ fun TodasBodegasScreen(
                 Row(modifier = Modifier.padding(bottom = 15.dp).fillMaxWidth(.95f), horizontalArrangement = Arrangement.SpaceBetween) {
                     Text(text = "Bodegas", fontWeight = FontWeight.Bold, fontSize = 22.sp)
                     Text(
-                        modifier = Modifier.clickable { navController.navigate(CoreScreen.Maps.route) },
+                        modifier = Modifier.clickable { navController.navigate(CoreScreen.Maps.route+"/"+idCliente) },
                         text = "Ver en mapa", color = Color.Blue, fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
                 }
             }
@@ -77,7 +81,7 @@ fun TodasBodegasScreen(
                 item {
                     Column(modifier = Modifier
                         .fillMaxWidth(1f)
-                        .clickable { navController.navigate(Graph.BODEGA+"/"+bodega.id) }
+                        .clickable { navController.navigate(Graph.BODEGA+"/cliente/"+idCliente+"/"+bodega.id) }
                     ) {
                         Row() {
                             IconButton(onClick = { /*navController.navigate(Graph.BODEGA+"/"+bodega.id)*/}) {

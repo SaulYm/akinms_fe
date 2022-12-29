@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun MapsScreen(
     navController: NavHostController,
+    idCliente: Long,
     mapsViewModel: MapsViewModel = hiltViewModel()
 ){
     val state = mapsViewModel.state
@@ -51,13 +53,13 @@ fun MapsScreen(
             ) {
                 Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "", tint = Color.White)
             }
-            Text(text = "Encuentra tu bodega cercana", color = Color.White)
+            Text(text = "Encuentra tu bodega cercana", color = Color.White,fontWeight = FontWeight.Bold,)
         }
-        println("CANTIDAD DE BODEGAS: "+state.bodegas.size)
         MapContainer(
             navController = navController,
             isLoading = state.isLoading,
-            bodegas = state.bodegas
+            bodegas = state.bodegas,
+            idCliente = idCliente
         )
     }
 }

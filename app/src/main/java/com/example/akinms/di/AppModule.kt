@@ -6,16 +6,12 @@ import com.example.akinms.data.repositories.CartRepositoryImpl
 import com.example.akinms.data.source.local.CartDao
 import com.example.akinms.data.source.local.CartDb
 import com.example.akinms.domain.repositories.CartItemRepository
-import com.example.akinms.util.AppNavigator
-import com.example.akinms.borrar.AppNavigatorImpl
 import com.example.akinms.util.CART_TABLE
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -41,13 +37,4 @@ class AppModule {
     ) : CartItemRepository = CartRepositoryImpl(
         cartDao = cartDao
     )
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-interface AppModule2 {
-
-    @Singleton
-    @Binds
-    fun bindAppNavigator(appNavigatorImpl: AppNavigatorImpl): AppNavigator
 }

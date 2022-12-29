@@ -1,13 +1,7 @@
 package com.example.akinms.di
 
-import com.example.akinms.data.repositories.BodegaRepositoryImpl
-import com.example.akinms.data.repositories.CategoriaRepositoryImpl
-import com.example.akinms.data.repositories.PedidoRepositoryImpl
-import com.example.akinms.data.repositories.ProductRepositoryImpl
-import com.example.akinms.domain.repositories.BodegaRepository
-import com.example.akinms.domain.repositories.CategoriaRepository
-import com.example.akinms.domain.repositories.PedidoRepository
-import com.example.akinms.domain.repositories.ProductRepository
+import com.example.akinms.data.repositories.*
+import com.example.akinms.domain.repositories.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,4 +19,6 @@ abstract class RespositoriesModule {
     abstract fun bindCategoriaRepository(impl: CategoriaRepositoryImpl) : CategoriaRepository
     @Binds
     abstract fun bindPedidoRepository(impl: PedidoRepositoryImpl) : PedidoRepository
+    @Binds
+    abstract fun bindClienteRepository(impl: ClienteRepositoryImpl) : ClienteRepository
 }

@@ -49,28 +49,27 @@ fun DetailsScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = 8.dp),
+            .padding(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().background(PrimaryColor),
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
                 onClick = { navController.popBackStack() }
             ) {
-                Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "")
+                Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "", tint = Color.White)
             }
             Text(
                 modifier = Modifier.padding(start = 34.dp),
                 text = "Información de Compra",
-                color = Color.Black,
-                fontSize = 23.sp,
+                color = Color.White,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
         }
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()

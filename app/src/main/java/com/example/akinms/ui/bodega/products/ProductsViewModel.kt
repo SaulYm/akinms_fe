@@ -33,7 +33,6 @@ class ProductsViewModel @Inject constructor(
     val eventFlow = _eventFlow.asSharedFlow()
 
     init{
-        //getProducts()
     }
 
     fun getProducts(){

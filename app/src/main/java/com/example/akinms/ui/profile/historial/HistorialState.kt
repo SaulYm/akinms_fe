@@ -1,10 +1,10 @@
-package com.example.akinms.ui.profile
+package com.example.akinms.ui.profile.historial
 
 import com.example.akinms.data.source.remote.dto.cliente.Cliente
 import com.example.akinms.data.source.remote.dto.pedido.Pedido
 import com.example.akinms.data.source.remote.dto.pedido.PedidoX
 
-data class ProfileState(
-    var cliente: Cliente? = null,
+data class HistorialState(
+    val pedidos: List<PedidoX> = emptyList(),
     val isLoading: Boolean = false
 )

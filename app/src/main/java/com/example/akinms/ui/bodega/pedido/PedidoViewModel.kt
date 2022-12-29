@@ -22,9 +22,6 @@ class PedidoViewModel @Inject constructor(
     var state by mutableStateOf(PedidoState())
         private set
     val idcliente: Long = 1
-    /*init{
-        getPedidos()
-    }*/
     fun setPedido(pedido: Pedido) {
         viewModelScope.launch {
             setPedidoUseCase(pedido).also { result ->

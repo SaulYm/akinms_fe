@@ -1,4 +1,4 @@
-package com.example.akinms.components
+package com.example.akinms.ui.components
 
 import android.content.Context
 import android.widget.Toast
@@ -25,7 +25,6 @@ fun IncDecBtn2(
     cantidad: MutableState<Int>,
     context: Context
 ){
-    //var cantidad = remember { mutableStateOf(item.cantidad) }
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally

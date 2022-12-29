@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -19,8 +20,6 @@ import com.example.akinms.ui.theme.PrimaryColor
 @Composable
 fun SettingsScreen(
     navController: NavHostController,
-    //settingsViewModel: SettingsViewModel = hiltViewModel()
-    ///onBackClick: Boolean,
 ){
     Column(
         modifier = Modifier
@@ -36,7 +35,7 @@ fun SettingsScreen(
             ) {
                 Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "", tint = Color.White)
             }
-            Text(text = "Configuración", color = Color.White)
+            Text(text = "Configuración", color = Color.White,fontWeight = FontWeight.Bold,)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.akinms.components
+package com.example.akinms.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,7 +24,6 @@ fun SomeCategories(
     navController: NavHostController,
     category: List<Categoria>
 ){
-    //val category = listOf(Category(),Category(),Category(),Category(),Category(),Category())
     Column(
 
     ) {
@@ -56,49 +55,6 @@ fun SomeCategories(
             ) {
                 cat.forEach{
                     CategoryItem(category = it,navController = navController, idBodega = idBodega)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun SomeCategories2(
-    onAllCategoriesClick: () -> Unit,
-){
-    val category = listOf(Category(),Category(),Category(),Category(),Category(),Category())
-    Column(
-
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp, start = 18.dp, end = 18.dp, bottom = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Categorias",
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                modifier = Modifier.clickable {
-                    onAllCategoriesClick
-                },
-                text = "ver todas",
-                fontWeight = FontWeight.Bold,
-                fontSize = 12.sp,
-                color = Color(0xFF38A3A5)
-            )
-        }
-        for(cat in category.chunked(4)){
-            Row(
-                modifier = Modifier.padding(start = 8.dp),
-                horizontalArrangement = Arrangement.Start
-            ) {
-                cat.forEach{
-                    Text(text = it.nombre)
-                    //CategoryItem(category = it,navController = navController)
                 }
             }
         }

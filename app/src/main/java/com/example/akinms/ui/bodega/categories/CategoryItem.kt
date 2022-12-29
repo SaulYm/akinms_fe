@@ -33,7 +33,6 @@ fun CategoryItem(
     Column(
         modifier = Modifier.width(120.dp).padding(horizontal = 12.dp, vertical = 8.dp).clickable {
             navController.navigate(route = BodegaScreen.Products.route+"/bodega/"+idBodega+"/categoria/"+category.idcategoria)
-            //println("CATEGORIA SELECCIONADA: "+category.nombre+" CON ID: "+category.idcategoria)
         },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -44,17 +43,10 @@ fun CategoryItem(
                 .height(100.dp)
                 .width(100.dp)
         ){
-            /*val indice:Int = LocalContext.current.resources.getIdentifier(category.img,"drawable",
-                LocalContext.current.packageName)
-            Image(
-                modifier = Modifier.align(Alignment.Center).height(55.dp),
-                painter = painterResource(indice), contentDescription = "Category product"
-            )*/
             Image(
                 modifier = Modifier.align(Alignment.Center).height(70.dp).width(70.dp),
                 painter = rememberAsyncImagePainter(category.img),
                 contentDescription = null,
-                //modifier = Modifier.size(100.dp)
             )
         }
         Text(

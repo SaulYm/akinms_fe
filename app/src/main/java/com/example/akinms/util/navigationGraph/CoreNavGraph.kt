@@ -1,5 +1,7 @@
 package com.example.akinms.util.navigationGraph
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.navigation.NavGraphBuilder
@@ -15,6 +17,7 @@ import com.example.akinms.ui.home.HomeScreen
 import com.example.akinms.ui.home.HomeViewModel
 import com.example.akinms.util.BottomBarScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.coreNavGraph(
     navController: NavHostController
 ) {
@@ -22,9 +25,9 @@ fun NavGraphBuilder.coreNavGraph(
         route = Graph.CORE,
         startDestination = BottomBarScreen.Home.route
     ) {
-        composable(route = BottomBarScreen.Home.route) {
-
-            //CoreScreen(navController=navController)
+        composable(
+            route = BottomBarScreen.Home.route
+        ) {
             HomeScreen(navController = navController)
         }
         composable(route = CoreScreen.Ofertas.route){
@@ -32,14 +35,25 @@ fun NavGraphBuilder.coreNavGraph(
                 Text(text = "All oferts Screen")
             }
         }
-        composable(route = CoreScreen.Maps.route) {
-            MapsScreen(navController = navController)
+        composable(route = CoreScreen.Maps.route+"/{id_cli}",
+            arguments = listOf(
+                navArgument("id_cli"){type= NavType.LongType}
+        )) { backStackEntry ->
+            var id = backStackEntry.arguments?.getLong("id_cli")
+            requireNotNull(id)
+            MapsScreen(navController = navController,idCliente = id)
         }
-        composable(route = Graph.BODEGA+"/{id}",
-            arguments = listOf(navArgument("id"){type= NavType.LongType})) { backStackEntry ->
+        composable(route = Graph.BODEGA+"/cliente/{id_cli}/{id}",
+            arguments = listOf(
+                navArgument("id"){type= NavType.LongType},
+                navArgument("id_cli"){type= NavType.LongType}
+            )) { backStackEntry ->
             val id = backStackEntry.arguments?.getLong("id")
             requireNotNull(id)
-            BodegaScreen(coreNavController = navController, id = id)
+            val id2 = backStackEntry.arguments?.getLong("id_cli")
+            requireNotNull(id)
+            requireNotNull(id2)
+            BodegaScreen(coreNavController = navController, id = id, id_cli = id2)
         }
         composable(route = CoreScreen.Bodegas.route){
             TodasBodegasScreen(navController=navController)

@@ -19,7 +19,6 @@ class DetalleViewModel @Inject constructor(
 ) : ViewModel() {
     var state by mutableStateOf(DetalleState())
         private set
-    val idcliente: Long = 1
     init{
         getPedido()
     }
@@ -27,7 +26,6 @@ class DetalleViewModel @Inject constructor(
         savedStateHandle.get<Long>("id_cliente")?.let { clienteId ->
             savedStateHandle.get<Long>("id_pedido")?.let { pedidoId ->
                 viewModelScope.launch {
-                    println("ID DEL PEDIDO: "+pedidoId)
                     getDetallePedidoClienteUseCase(clienteId, pedidoId).also { result ->
                         when (result) {
                             is Result.Success -> {

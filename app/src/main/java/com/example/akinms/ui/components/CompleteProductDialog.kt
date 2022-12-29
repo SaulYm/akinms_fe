@@ -1,42 +1,31 @@
-package com.example.akinms.components
+package com.example.akinms.ui.components
 
 import android.content.Context
-import android.text.style.LineHeightSpan
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-import com.example.akinms.CartItemEntity
-import com.example.akinms.Producto
 import com.example.akinms.domain.model.CartItem
-import com.example.akinms.domain.model.Product
 import com.example.akinms.domain.model.Products
-import com.example.akinms.ui.Screen
 import com.example.akinms.ui.bodega.cart.CartViewModel
+import com.example.akinms.util.navigationGraph.BodegaScreen
 
 @Composable
 fun CompleteProductDialog(
@@ -152,7 +141,7 @@ fun BodyProductDialogContent(
                         )
                     )
                     println("Enviar producto")
-                    navController.navigate(Screen.Cart.route+"/"+idBodega)
+                    navController.navigate(BodegaScreen.Cart.route+"/"+idBodega)
                 },
                 modifier = Modifier.width(240.dp),
                 shape = RoundedCornerShape(16.dp),

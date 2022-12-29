@@ -12,7 +12,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -20,35 +19,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-import com.example.akinms.R
 import com.example.akinms.domain.model.CartItem
-import com.example.akinms.ui.Screen
 import com.example.akinms.ui.bodega.cart.CartViewModel
 import com.example.akinms.util.navigationGraph.BodegaScreen
 
 @Composable
 fun CartProductItem(
-    //cantidad: MutableState<Int>
     item: CartItem,
     viewModel: CartViewModel,
     navController: NavHostController,
     idBodega: Int,
 ){
-    //var cantidad = remember { mutableStateOf(1) }
     val context: Context = LocalContext.current
     Row(
         modifier = Modifier
             .padding(vertical = 8.dp)
             .fillMaxWidth(0.9f)
-            .height(105.dp)
+            .height(125.dp)
             .border(width = 1.dp, color = Color(0xFFFFC532), shape = RoundedCornerShape(10.dp)),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -68,7 +60,6 @@ fun CartProductItem(
                     modifier = Modifier.align(Alignment.Center),
                     painter = rememberAsyncImagePainter(item.img),
                     contentDescription = null,
-                    //modifier = Modifier.size(100.dp)
                 )
             }
             Column(
@@ -98,7 +89,6 @@ fun CartProductItem(
             verticalArrangement = Arrangement.Center
         ) {
             var cantidad = remember { mutableStateOf(item.cantidad) }
-            //IncDecBtn(item = item, context = context, viewModel = viewModel)
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -115,51 +105,6 @@ fun CartProductItem(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    /*Button(
-                        onClick = {
-                            if (cantidad.value > 1) {
-                                cantidad.value--
-                                item.cantidad = cantidad.value
-                                viewModel.updateCartItem(item)
-                                navController.popBackStack()
-                                navController.navigate(Screen.Cart.route)
-                            } else {
-                                Toast
-                                    .makeText(
-                                        context,
-                                        "Cantidad minima es 1",
-                                        Toast.LENGTH_SHORT
-                                    )
-                                    .show()
-                            }
-                        },
-                        modifier = Modifier.width(30.dp),
-                        shape = RoundedCornerShape(5.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = Color(0xFFD9D9D9),
-                            contentColor = Color(0x00000000)
-                        ),
-                    ) {
-                        Text(text = "-", fontSize = 12.sp)
-                    }
-                    Text(text = cantidad.value.toString())
-                    Button(
-                        onClick = {
-                            cantidad.value++
-                            item.cantidad = cantidad.value
-                            viewModel.updateCartItem(item)
-                            navController.popBackStack()
-                            navController.navigate(Screen.Cart.route)
-                        },
-                        modifier = Modifier.width(30.dp),
-                        shape = RoundedCornerShape(5.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = Color(0xFFD9D9D9),
-                            contentColor = Color(0x00000000)
-                        ),
-                    ) {
-                        Text(text = "+", fontSize = 12.sp)
-                    }*/
                     Box(
                         modifier = Modifier
                             .width(30.dp)
@@ -211,6 +156,7 @@ fun CartProductItem(
             }
             IconButton(
                 modifier = Modifier
+                    .padding(top = 5.dp)
                     .background(Color(0xFFE5383B))
                     .border(width = 1.dp,color=Color(0xFFE5383B), shape = RoundedCornerShape(5.dp))
                     .padding(0.dp),
@@ -218,19 +164,6 @@ fun CartProductItem(
             ) {
                 Icon(Icons.Rounded.Delete, contentDescription = "", tint = Color.White)
             }
-            /*Button(
-                onClick = {
-                    viewModel.deleteCartItem(item)
-                },
-                modifier = Modifier.width(90.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color(0xFFE5383B),
-                    contentColor = Color(0xFFFFFFFF)
-                ),
-            ) {
-                Text(text = "Eliminar", fontSize = 12.sp)
-            }*/
         }
     }
 }

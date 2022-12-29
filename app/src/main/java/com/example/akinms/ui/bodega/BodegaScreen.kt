@@ -1,4 +1,5 @@
 package com.example.akinms.ui.bodega
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
@@ -32,9 +33,14 @@ import com.example.akinms.ui.bodega.cart.CartViewModel
 import com.example.akinms.ui.bodega.categories.CategoriesScreen
 import com.example.akinms.ui.bodega.pedido.CheckOutScreen
 import com.example.akinms.ui.bodega.products.ProductsScreen
+import com.example.akinms.ui.components.NavBarTop
+import com.example.akinms.ui.components.Other
+import com.example.akinms.ui.components.SearchBar
+import com.example.akinms.ui.components.SomeCategories
 import com.example.akinms.util.navigationGraph.Graph
 import kotlinx.coroutines.flow.collectLatest
 
+@SuppressLint("UnrememberedGetBackStackEntry")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BodegaScreen(
@@ -43,9 +49,9 @@ fun BodegaScreen(
     bodegaViewModel: BodegaViewModel = hiltViewModel(),
     cartViewModel: CartViewModel = hiltViewModel(),
     id: Long,
+    id_cli: Long
 ) {
     val items by cartViewModel.items.collectAsState(initial = emptyList())
-
     var cartBodega = mutableListOf<CartItem>()
     for(item in items){
         if(item.idBodega == id.toInt())
@@ -67,7 +73,6 @@ fun BodegaScreen(
     }
     val bodega = state.bodega
     val categorias = state.categorias
-    println("CANTIDAD DE CATEGORIAS:       "+categorias.size)
     val someCategorias = mutableListOf<Categoria>()
     for(cat in categorias){
         if(someCategorias.size<6){
@@ -75,8 +80,6 @@ fun BodegaScreen(
         }
     }
     if(bodega!=null){
-        //var cantidadCarrito = remember{ mutableStateOf(0) }
-        //cantidadCarrito.value = cartBodega.size
         Scaffold(
             topBar = {
                 NavBarTop(bodega = bodega, navController = navController, coreController = coreNavController)
@@ -85,9 +88,8 @@ fun BodegaScreen(
             NavHost(
                 navController = navController,
                 startDestination = Bodega.route,
-                route = Graph.BODEGA+"/{id}"
+                route = Graph.BODEGA+"/cliente/{id_cli}/{id}"
             ){
-                //cantidadCarrito.value = cartBodega.size
                 composable(route = Bodega.route){
                     LazyColumn(
                         modifier = Modifier.fillMaxWidth(1f),
@@ -107,7 +109,7 @@ fun BodegaScreen(
                                 Button(
                                     modifier = Modifier.padding(top = 20.dp, bottom = 10.dp).fillMaxWidth(.9f),
                                     onClick = { navController.navigate(Products.route+"/"+bodega.id) }
-                                ) { //cambiar el 2 por el id de la bodega
+                                ) {
                                     Text(text = "Ver Catalogo de productos    ")
                                     Image(painter = painterResource(id = com.example.akinms.R.drawable.dairy), contentDescription = "")
                                 }
@@ -120,7 +122,6 @@ fun BodegaScreen(
                     )
                 }
                 composable(route = BodegaScreen.Categories.route){
-                    //AllCategoriesView(navController = navController)
                     CategoriesScreen(navController = navController, bodegaNombre = bodega.nombre, listaCategorias = categorias, idBodega = bodega.id)
                 }
                 composable(
@@ -155,7 +156,7 @@ fun BodegaScreen(
                 composable(
                     route = BodegaScreen.CheckOut.route
                 ){
-                    CheckOutScreen(navController=navController, idBodega = bodega.id)
+                    CheckOutScreen(navController=navController, idBodega = bodega.id, idCliente = id_cli.toInt())
                 }
             }
 

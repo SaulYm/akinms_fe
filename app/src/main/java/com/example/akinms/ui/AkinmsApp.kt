@@ -18,19 +18,6 @@ import com.example.akinms.util.navigationGraph.RootNavigationGraph
 fun AkinmsApp(){
     AkinmsTheme {
         val navController = rememberNavController()
-        /*val navController = rememberNavController()
-        val navigationActions = remember(navController){
-            AkinmsActions(navController)
-        }
-        AkinmsNavGraph(
-            navController = navController,
-            navigateToProducts = navigationActions.navigateToProducts,
-            navigateToCart = navigationActions.navigateToCart,
-        )*/
-        //LoginView()
-        //HomeScreenV2()
         MainScreen(navController = navController)
-        //MapsScreen(navController = navController)
-        //RootNavigationGraph(navController = navController)
     }
 }

@@ -24,25 +24,11 @@ class CartViewModel @Inject constructor(
         private set
 
     val items = repo.getCartListFromRoom()
-    //var idBodega: Int = savedStateHandle.get<Long>("id")?.toInt()
-    //val items = repo.getCartListFromRoom(idBodega)
-
-    /*fun getList(id:Int): Flow<CartList> {
-        return repo.getCartListFromRoom()
-    }*/
-
 
     init {
-        /*savedStateHandle.get<Long>("id").let {
-            if (it != null) {
-                idBodega = it.toInt()
-            }
-        }*/
 
     }
     fun addCartItem(cartItem: CartItem) = viewModelScope.launch(Dispatchers.IO) {
-        println("Producto recibido")
-        println(cartItem.toString())
         repo.addItemToRoom(cartItem)
     }
     fun updateCartItem(cartItem: CartItem) = viewModelScope.launch(Dispatchers.IO) {

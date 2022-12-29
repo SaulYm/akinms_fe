@@ -1,5 +1,6 @@
 package com.example.akinms.ui.profile
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -25,14 +27,20 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.akinms.R
 import com.example.akinms.ui.theme.PrimaryColor
 import com.example.akinms.util.BottomBarScreen
+import com.example.akinms.util.navigationGraph.Graph
 import com.example.akinms.util.navigationGraph.ProfileScreen
 
+@SuppressLint("StateFlowValueCalledInComposition", "UnrememberedGetBackStackEntry")
 @Composable
 fun ProfileScreen(
     navController: NavHostController,
-    //profileViewModel: ProfileViewModel = hiltViewModel()
-    //onBackClick: Boolean,
+    profileViewModel: ProfileViewModel = hiltViewModel()
 ){
+    var state = profileViewModel.state
+    var id = navController.getBackStackEntry(Graph.HOME+"/{idcliente}").arguments?.getLong("idcliente")
+    if (id != null) {
+        profileViewModel.getUsuario(id)
+    }
     Column(
         modifier = Modifier
             .fillMaxSize(1f),
@@ -49,7 +57,7 @@ fun ProfileScreen(
             ) {
                 Icon(painter = painterResource(R.drawable.ic_back), contentDescription = "", tint = Color.White)
             }
-            Text(text = "Vista de Usuario", color = Color.White)
+            Text(text = "Vista de Usuario", color = Color.White,fontWeight = FontWeight.Bold,)
         }
         LazyColumn(
             modifier = Modifier
@@ -57,65 +65,68 @@ fun ProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ){
-            item{
-                Column(modifier = Modifier
-                    .padding(top = 20.dp, bottom = 10.dp)
-                    .fillMaxWidth(.9f)
-                ) {
-                    Text(
-                        modifier = Modifier.padding(vertical = 10.dp),
-                        text = "Datos Personales", fontSize = 18.sp, fontWeight = FontWeight.SemiBold
-                    )
-                    Text(text = "Nombres:")
-                    Box(modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .fillMaxWidth(1f)
-                        .border(
-                            width = 1.dp,
-                            color = PrimaryColor,
-                            shape = RoundedCornerShape(5.dp)
+            if(state.cliente!=null){
+                item{
+                    Column(modifier = Modifier
+                        .padding(top = 20.dp, bottom = 10.dp)
+                        .fillMaxWidth(.9f)
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(vertical = 10.dp),
+                            text = "Datos Personales", fontSize = 18.sp, fontWeight = FontWeight.SemiBold
                         )
-                        .padding(10.dp)) {
-                        Text(text = "Juanito Leonardo")
-                    }
-                    Text(text = "Apellidos:")
-                    Box(modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .fillMaxWidth(1f)
-                        .border(
-                            width = 1.dp,
-                            color = PrimaryColor,
-                            shape = RoundedCornerShape(5.dp)
-                        )
-                        .padding(10.dp)) {
-                        Text(text = "Armando Paredes")
-                    }
-                    Text(text = "Telefono:")
-                    Box(modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .fillMaxWidth(1f)
-                        .border(
-                            width = 1.dp,
-                            color = PrimaryColor,
-                            shape = RoundedCornerShape(5.dp)
-                        )
-                        .padding(10.dp)) {
-                        Text(text = "987654321")
-                    }
-                    Text(text = "Direccion:")
-                    Box(modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .fillMaxWidth(1f)
-                        .border(
-                            width = 1.dp,
-                            color = PrimaryColor,
-                            shape = RoundedCornerShape(5.dp)
-                        )
-                        .padding(10.dp)) {
-                        Text(text = "Av. siempre viva 69")
+                        Text(text = "Nombres:")
+                        Box(modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .fillMaxWidth(1f)
+                            .border(
+                                width = 1.dp,
+                                color = PrimaryColor,
+                                shape = RoundedCornerShape(5.dp)
+                            )
+                            .padding(10.dp)) {
+                            Text(text = state.cliente!!.nombres)
+                        }
+                        Text(text = "Apellidos:")
+                        Box(modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .fillMaxWidth(1f)
+                            .border(
+                                width = 1.dp,
+                                color = PrimaryColor,
+                                shape = RoundedCornerShape(5.dp)
+                            )
+                            .padding(10.dp)) {
+                            Text(text = state.cliente!!.apellidos)
+                        }
+                        Text(text = "Telefono:")
+                        Box(modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .fillMaxWidth(1f)
+                            .border(
+                                width = 1.dp,
+                                color = PrimaryColor,
+                                shape = RoundedCornerShape(5.dp)
+                            )
+                            .padding(10.dp)) {
+                            Text(text = state.cliente!!.telefono)
+                        }
+                        Text(text = "Direccion:")
+                        Box(modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .fillMaxWidth(1f)
+                            .border(
+                                width = 1.dp,
+                                color = PrimaryColor,
+                                shape = RoundedCornerShape(5.dp)
+                            )
+                            .padding(10.dp)) {
+                            Text(text = state.cliente!!.direccion)
+                        }
                     }
                 }
             }
+
             item{
                 Column(modifier = Modifier
 
@@ -133,7 +144,7 @@ fun ProfileScreen(
                     ) {
                         Button(
                             modifier = Modifier.fillMaxWidth(.78f),
-                            onClick = { navController.navigate(ProfileScreen.Historial.route) }) {
+                            onClick = { navController.navigate(ProfileScreen.Historial.route+"/"+state.cliente?.idcliente) }) {
                             Text(text = "Ver historial")
                         }
                         IconButton(onClick = { navController.navigate(ProfileScreen.Historial.route) }) {
@@ -146,12 +157,6 @@ fun ProfileScreen(
                 }
             }
         }
-        /*Column() {
-            Text(text = "Dato de usuario")
-            Text(text = "Dato de usuario")
-            Text(text = "Dato de usuario")
-            Text(text = "Dato de usuario")
-        }*/
     }
     
 }

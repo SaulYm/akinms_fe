@@ -15,9 +15,6 @@ fun NavGraphBuilder.profileNavGraph(navController: NavHostController) {
         composable(route = BottomBarScreen.Profile.route){
             ProfileScreen(navController = navController)
         }
-        /*composable(route = ProfileScreen.Historial.route) {
-            HistorialScreen(navController = navController)
-        }*/
         historialNavGraph(navController)
     }
 }

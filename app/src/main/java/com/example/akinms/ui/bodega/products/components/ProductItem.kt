@@ -24,6 +24,9 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.akinms.domain.model.Products
+import com.example.akinms.ui.components.BodyProductDialogContent
+import com.example.akinms.ui.components.CompleteProductDialog
+import com.example.akinms.ui.components.ProductTextDetails
 
 
 @Composable
@@ -32,12 +35,10 @@ fun ProductItem(
     idBodega: Int,
     navController: NavHostController
 ){
-    /*Dialog variables*/
     val context: Context = LocalContext.current
     val dialogState: MutableState<Boolean> = remember {
         mutableStateOf(false)
     }
-    //Code to show and dismiss dialog
     if(dialogState.value){
         var cantidad = remember {
             mutableStateOf(1)
@@ -71,13 +72,6 @@ fun ProductItem(
                 //.align(Alignment.CenterHorizontally)
 
         ){
-            /*val indice:Int = LocalContext.current.resources.getIdentifier(producto.img,"drawable",
-                LocalContext.current.packageName)
-            Image(
-                modifier = Modifier.align(Alignment.Center),
-                //painter = painterResource(indice),
-                painter = painterResource(id = com.example.akinms.R.drawable.pilsen355),
-                contentDescription = "Producto img")*/
             Image(
                 modifier = Modifier.align(Alignment.Center),
                 painter = rememberAsyncImagePainter(producto.img),

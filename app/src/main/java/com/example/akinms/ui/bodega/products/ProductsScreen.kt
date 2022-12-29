@@ -31,7 +31,6 @@ fun ProductsScreen(
     } else if(nombreSearch){
         viewModel.getProductsNombre(idBodega.toLong(),nombre)
         state.isLoading = false
-        println("SOLICITAN BUSQUEDA POR NOMBRE: "+nombre)
     }
     //val state = viewModel.state
     val eventFlow = viewModel.eventFlow

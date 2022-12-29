@@ -8,12 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.akinms.data.Result
 import com.example.akinms.domain.use_case.GetBodegasPremiumUseCase
-import com.example.akinms.ui.Maps.MapsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import com.example.akinms.util.AppNavigator
-import com.example.akinms.util.navigationGraph.CoreScreen
-import com.example.akinms.util.navigationGraph.Graph
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
@@ -22,9 +18,10 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getBodegasPremiumUseCase: GetBodegasPremiumUseCase
+    private val getBodegasPremiumUseCase: GetBodegasPremiumUseCase,
+
 ) : ViewModel(){
-    var state by mutableStateOf(MapsState(isLoading = true))
+    var state by mutableStateOf(HomeState())
         private set
     private val _eventFlow = MutableSharedFlow<UIEvent>()
     val eventFlow = _eventFlow.asSharedFlow()

@@ -1,4 +1,4 @@
-package com.example.akinms.components
+package com.example.akinms.ui.components
 
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
@@ -58,7 +58,6 @@ fun SearchBar(
                     singleLine = true,
                     onValueChange = {
                         textSearch = it
-                        //productViewModel.getProductsNombre(idBodega.toLong(),textSearch)
                         println("TEXTO INGRESADO :       "+textSearch)},
                     decorationBox = {
                             innerTextField ->
@@ -76,7 +75,6 @@ fun SearchBar(
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Go),
                     keyboardActions = KeyboardActions(
                         onGo = {
-                            println("SAUL SE LA COME")
                             navController.navigate(BodegaScreen.Products.route+"/buscar/"+textSearch)
                         }
                     ),
@@ -84,7 +82,6 @@ fun SearchBar(
                             .padding(horizontal = 5.dp, vertical = 10.dp)
                         .onKeyEvent {
                         if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER){
-                            println("SAUL SE LA COMIÓ")
                             navController.navigate(BodegaScreen.Products.route+"/buscar/"+textSearch)
                             true
                         }

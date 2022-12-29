@@ -5,6 +5,8 @@ import com.example.akinms.data.source.remote.dto.bodega.BodegasDto
 import com.example.akinms.data.source.remote.dto.categoria.CategoriasDto
 import com.example.akinms.data.source.remote.dto.pedido.*
 import com.example.akinms.data.source.remote.dto.producto.ProductDto
+import com.example.akinms.data.source.remote.dto.cliente.Cliente
+import com.example.akinms.data.source.remote.dto.cliente.ClienteDto
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -61,4 +63,16 @@ interface ApiRest {
         @Path("id_cliente") id_cliente: Long,
         @Path("id_pedido") id_pedido: Long
     ): PedidoDto4
+
+    @POST("clientes/buscarcliente?")
+    suspend fun buscarCliente(
+        @Query("correo") correo: String,
+        @Query("pass") pass: String,
+        //@Body cliente: Cliente
+    ): ClienteDto
+
+    @GET("clientes/{id}")
+    suspend fun getCliente(
+        @Path("id") id: Long
+    ): ClienteDto
 }
