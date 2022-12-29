@@ -26,23 +26,23 @@ interface ApiRest {
     @GET("bodegas/listarbodegas/premium")
     suspend fun getBodegasPremium(): BodegasDto
 
-    @GET("bodegas/detalles/{id}")
+    @GET("bodegas/consultar/{id}")
     suspend fun getBodega(
         @Path("id") id:Long
     ): BodegaDto
 
-    @GET("categorias/bodega/{id}")
+    @GET("categorias/listar/bodega/{id}")
     suspend fun getAllCategoriesBodega(
         @Path("id") id: Long
     ): CategoriasDto
 
-    @GET("productos/bodega/{id1}/categoria/{id2}")
+    @GET("productos/consultar/bodega/{id1}/categoria/{id2}")
     suspend fun getProductsCategoria(
         @Path("id1") id1: Long,
         @Path("id2") id2: Long
     ): ProductDto
 
-    @GET("productos/bodega/{id}/search?")
+    @GET("productos/consultar/bodega/{id}/buscar?")
     suspend fun getProductsByName(
         @Path("id") id: Long,
         @Query("nombre") nombre: String
@@ -71,7 +71,7 @@ interface ApiRest {
         //@Body cliente: Cliente
     ): ClienteDto
 
-    @GET("clientes/{id}")
+    @GET("clientes/consultar/{id}")
     suspend fun getCliente(
         @Path("id") id: Long
     ): ClienteDto
